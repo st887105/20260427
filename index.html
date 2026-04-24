@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>車城國小｜網路程式設計輔助精靈</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+        .step-content { display: none; animation: fadeIn 0.5s; }
+        .step-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 針對 Textarea 程式碼編輯器優化 */
+        textarea.code-box { 
+            font-family: 'Courier New', Courier, monospace; 
+            white-space: pre; 
+            overflow-x: auto; 
+            resize: vertical; /* 允許垂直拖拉調整大小 */
+            line-height: 1.5;
+        }
+        ::-webkit-scrollbar { height: 8px; width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- 裝置建議提示 -->
+    <div class="bg-blue-100 text-blue-800 text-center py-2 text-sm font-bold px-4">
+        💡 建議使用平板或桌上型電腦操作，以獲得最佳的程式碼編輯與下載體驗。
+    </div>
+
+    <!-- 頂部導航與進度條 -->
+    <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl md:text-2xl font-black flex items-center gap-2 tracking-wide">
+                車城國小｜網路程式設計輔助精靈
+            </h1>
+            
+            <!-- 進度指示器 -->
+            <div class="flex items-center gap-2 text-xs md:text-sm font-bold w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                <div id="nav-1" class="px-3 py-1 bg-white text-slate-800 rounded-full flex-shrink-0">1. 帳號準備</div>
+                <div class="text-slate-400">➔</div>
+                <div id="nav-2" class="px-3 py-1 text-slate-300 opacity-70 flex-shrink-0">2. 後端(GAS)</div>
+                <div class="text-slate-400">➔</div>
+                <div id="nav-3" class="px-3 py-1 text-slate-300 opacity-70 flex-shrink-0">3. 前端(UI)</div>
+                <div class="text-slate-400">➔</div>
+                <div id="nav-4" class="px-3 py-1 text-slate-300 opacity-70 flex-shrink-0">4. 程式碼生成</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+        
+        <!-- ==================== 步驟 1 ==================== -->
+        <div id="step-1" class="step-content active bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-blue-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">1</span> 帳號與環境準備
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6 items-start">
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-700 mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                        ① Google 帳號設定
+                    </h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        我們需要 Google 雲端硬碟來存放資料庫 (Google 試算表) 和後端應用程式 (Google Apps Script)。
+                    </p>
+                    <div class="bg-blue-100 border-l-4 border-blue-500 p-3 rounded text-sm text-blue-800 space-y-2">
+                        <p><strong>關於帳號選擇：</strong></p>
+                        <p>✅ 可以使用<strong>學校教育版帳號</strong>，但需配合後續步驟的 Cloudflare Workers 來解決跨域 (CORS) 權限阻擋問題。</p>
+                        <p>✅ 若無特別需求，建議使用<strong>個人的 @gmail.com 帳號</strong>，設定上最為簡便直接。</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-700 mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-slate-800" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        ② 註冊 GitHub 帳號
+                    </h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        GitHub 是存放前端網頁檔案並提供免費網頁代管服務 (GitHub Pages) 的平台。
+                    </p>
+                    <ul class="list-decimal list-inside text-sm text-slate-700 space-y-2">
+                        <li>前往 <a href="https://github.com/signup" target="_blank" class="text-blue-600 underline font-bold hover:text-blue-800">GitHub 註冊頁面</a>。</li>
+                        <li>輸入 Email，設定密碼與使用者名稱。</li>
+                        <li><strong>建議：</strong>直接輸入 Email 註冊，無需使用 Google 帳號串聯，保持帳號權限獨立。</li>
+                        <li>至信箱收取驗證碼，完成註冊流程。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-end">
+                <button onclick="goToStep(2)" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition flex items-center gap-2">
+                    下一步：後端 (GAS) 設定 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== 步驟 2 ==================== -->
+        <div id="step-2" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-emerald-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">2</span> 建造雲端大腦 (GAS 設定)
+            </h2>
+            
+            <div class="space-y-8">
+                <!-- 2-1 Code.gs 範例選擇與進階提醒 -->
+                <div>
+                    <h3 class="text-lg font-bold text-slate-700 mb-4">2-1 後端參數與範例設定</h3>
+                    <div class="grid md:grid-cols-3 gap-5">
+                        
+                        <!-- Box 1: Dropdown Selection -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between shadow-sm">
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                                    選擇 Code.gs 範例
+                                </h4>
+                                <!-- 下拉式選單 -->
+                                <select id="backendTemplateSelector" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none font-medium text-slate-700" onchange="syncFrontendSelection(); updateCodePreview();">
+                                    <option value="basic_form">範例一：基本留言板寫入</option>
+                                    <option value="contact_form">範例二：聯絡我們表單 (多欄位)</option>
+                                    <option value="complete_app">範例三：完整打卡系統 (含完整架構展示)</option>
+                                </select>
+                                <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                                    請從清單選擇欲實作的後端邏輯。選擇後，第四步將自動產生對應的程式碼。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Box 2: Drive Folder Reminder -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-center shadow-sm">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                建立雲端硬碟資料夾
+                            </h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                若未來專案涉及產出 PDF 文件或上傳檔案，請建立獨立資料夾。<br>
+                                <span class="text-red-500 font-bold">提醒：務必要開啟共用權限</span>（知道連結的人皆可編輯或檢視），以供系統存取。
+                            </p>
+                        </div>
+
+                        <!-- Box 3: AI Helper Reminder -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-center shadow-sm">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                                🤖 AI 串接小幫手
+                            </h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                若專案欲呼叫外部 AI (如 Gemini API)，需額外設定 API Key 參數。<br>
+                                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-bold inline-block mt-1">此為進階擴充功能，非必要設定。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2-2 參數尋找教學 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-700 mb-2">2-2 參數查閱指南</h3>
+                    <p class="text-sm text-slate-500 mb-4">第四步生成程式碼時將會用到以下參數，請先確認取得方式：</p>
+                    
+                    <div class="space-y-3">
+                        <details class="bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer" open>
+                            <summary class="font-bold text-slate-700 hover:text-blue-600 select-none">📌 WebAppUrl (GAS 部署網址) - 所有專案必備</summary>
+                            <div class="mt-3 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                                1. 在 Google 試算表點選「擴充功能」>「Apps Script」。<br>
+                                2. 貼上稍後生成的 Code.gs 程式碼。<br>
+                                3. 點選右上角「部署」>「新增部署作業」> 類型選「網頁應用程式」。<br>
+                                <span class="text-red-500 font-bold bg-red-50 px-1">執行身分選「我」，誰可以存取選「所有人 (Anyone)」</span>。最後複製出現的網址。
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+                <button onclick="goToStep(1)" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold py-3 px-6 rounded-lg transition">🔙 上一步</button>
+                <button onclick="goToStep(3)" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition flex items-center gap-2">下一步：前端 (UI) 設定 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+            </div>
+        </div>
+
+        <!-- ==================== 步驟 3 ==================== -->
+        <div id="step-3" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-indigo-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-indigo-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">3</span> 網站門面 (前端與中介)
+            </h2>
+            
+            <div class="space-y-8">
+                <!-- 3-1 選擇 index.html 範例 -->
+                <div>
+                    <h3 class="text-lg font-bold text-slate-700 mb-4">3-1 選擇 index.html 前端範例</h3>
+                    
+                    <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 shadow-sm md:w-1/2">
+                        <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            UI 範例選擇
+                        </h4>
+                        <!-- 下拉式選單 -->
+                        <select id="frontendTemplateSelector" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium text-slate-700" onchange="updateCodePreview();">
+                            <option value="basic_form">UI 範例一：基本表單輸入介面</option>
+                            <option value="contact_form">UI 範例二：聯絡我們介面 (多欄位)</option>
+                            <option value="complete_app">UI 範例三：精美打卡頁面 (Tailwind CSS 完整版)</option>
+                        </select>
+                        <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                            此處預設已與後端範例配對。您稍後可將產出的程式碼匯出至 EzPage 進行視覺化設計與排版修改。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3-2 Cloudflare Worker -->
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 relative">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.33 10.22A5.5 5.5 0 008.67 9.04 4.5 4.5 0 004.5 17h14a3.5 3.5 0 00.83-6.78z"/></svg>
+                        3-2 Cloudflare Workers 轉接設定 (教育帳號建議使用)
+                    </h3>
+                    <p class="text-sm text-blue-700 mb-4">架構：前端網頁 ➔ Cloudflare Worker ➔ Google Apps Script。主要用於解決教育帳號的跨域 (CORS) 限制。</p>
+                    
+                    <label class="flex items-start gap-3 p-4 bg-white rounded-lg border border-blue-100 cursor-pointer shadow-sm hover:border-blue-300 transition">
+                        <input type="checkbox" id="useCfWorker" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-blue-500" onchange="toggleWorkerInput()">
+                        <div>
+                            <div class="font-bold text-slate-800">啟用 Cloudflare Worker</div>
+                            <div class="text-sm text-slate-500 mt-1">勾選後，系統將於第四步額外產生一份 worker.js 供您部署至 Cloudflare。</div>
+                        </div>
+                    </label>
+
+                    <div id="worker-guide" class="hidden mt-4 text-sm text-slate-600 space-y-2 bg-white p-4 rounded-lg border border-blue-100 shadow-inner">
+                        <p class="font-bold text-slate-700">部署步驟：</p>
+                        <ol class="list-decimal list-inside space-y-1">
+                            <li>登入 <a href="https://dash.cloudflare.com/sign-up/workers-and-pages" target="_blank" class="text-blue-600 underline">Cloudflare</a> 儀表板。</li>
+                            <li>左側選單點擊 <strong>Workers & Pages</strong> > <strong>Create Worker</strong>。</li>
+                            <li>將第四步產出的 worker.js 程式碼貼入並儲存部署。</li>
+                            <li>複製部署後取得的 <code>*.workers.dev</code> 網址，填入第四步表單中。</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+                <button onclick="goToStep(2)" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold py-3 px-6 rounded-lg transition">🔙 上一步</button>
+                <button onclick="goToStep(4); generateCode();" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition flex items-center gap-2">最後一步：產出程式碼 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></button>
+            </div>
+        </div>
+
+        <!-- ==================== 步驟 4 ==================== -->
+        <div id="step-4" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-purple-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center gap-3">
+                <span class="bg-purple-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">4</span> 程式碼產出中心
+            </h2>
+            <p class="text-slate-600 mb-6 text-sm">請於下方填寫對應的網址。黑色框框內的程式碼會<strong class="text-purple-600">自動更新</strong>，您也可以直接在黑色框框內手動修改文字與標籤！</p>
+
+            <!-- 填空區 -->
+            <div class="bg-slate-50 p-6 rounded-xl mb-8 border border-slate-200 shadow-inner">
+                <div class="grid md:grid-cols-2 gap-5" id="input-fields-container">
+                    <!-- 動態生成輸入框 -->
+                </div>
+            </div>
+
+            <!-- 程式碼顯示與下載區 -->
+            <div class="space-y-8">
+                
+                <!-- Frontend HTML -->
+                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                        <div>
+                            <span class="font-bold text-slate-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                index.html (前端介面檔)
+                            </span>
+                            <p class="text-xs text-slate-500 mt-1">您可直接在下方編輯區內修改程式碼，完成後再下載。</p>
+                        </div>
+                        <div class="flex items-center gap-2 w-full md:w-auto">
+                            <a href="https://gg90052.github.io/ezpage/" target="_blank" class="bg-white text-indigo-600 hover:bg-indigo-50 border border-indigo-200 text-xs font-bold px-3 py-1.5 rounded transition whitespace-nowrap">
+                                ✨ 前往 EzPage 視覺化設計
+                            </a>
+                            <button onclick="downloadCode('frontend-code', 'index.html')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition whitespace-nowrap">📥 下載檔案</button>
+                        </div>
+                    </div>
+                    <!-- 使用 textarea 替換 div，實現直接編輯 -->
+                    <textarea id="frontend-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-64 focus:outline-none focus:ring-2 focus:ring-indigo-500" wrap="off" spellcheck="false"></textarea>
+                    
+                    <!-- 新增 EzPage 與 GitHub 整合說明 -->
+                    <div class="bg-indigo-50 border-t border-indigo-200 p-4 rounded-b-xl">
+                        <details class="group cursor-pointer">
+                            <summary class="font-bold text-indigo-800 text-sm flex items-center gap-2 select-none">
+                                <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                💡 整合教學：如何將程式碼放進 EzPage 或上傳 GitHub？
+                            </summary>
+                            <div class="mt-4 ml-6 text-sm text-indigo-700 space-y-3">
+                                <div>
+                                    <strong class="bg-indigo-200 px-2 py-0.5 rounded text-indigo-800">方法 A：使用 EzPage 視覺化設計 (適合初學者)</strong>
+                                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                                        <li>點擊右上方「前往 EzPage」按鈕。</li>
+                                        <li>在 EzPage 拖拉元件設計您的專屬網頁。</li>
+                                        <li>將上方黑色框框內的 <code>&lt;script&gt;...&lt;/script&gt;</code> 完整程式碼區塊複製。</li>
+                                        <li>在 EzPage 中加入「自訂程式碼/HTML」區塊，將複製的腳本貼上。</li>
+                                        <li>確保您 EzPage 中設定的按鈕點擊動作與文字框 ID，與腳本內的名稱相符。</li>
+                                    </ol>
+                                </div>
+                                <div>
+                                    <strong class="bg-indigo-200 px-2 py-0.5 rounded text-indigo-800">方法 B：直接上傳 GitHub Pages (標準開發流程)</strong>
+                                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                                        <li>將上方程式碼直接點擊「下載檔案」(會存為 <code>index.html</code>)。</li>
+                                        <li>登入 GitHub，點擊 <strong>New repository</strong> 建立新專案。</li>
+                                        <li>將下載的檔案上傳至專案中。</li>
+                                        <li>點擊專案上方的 <strong>Settings</strong> ➔ 左側選單選 <strong>Pages</strong> ➔ Branch 選擇 <strong>main</strong> 並儲存，即可獲得公開網址！</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Backend GAS -->
+                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+                        <div>
+                            <span class="font-bold text-slate-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
+                                Code.gs (後端邏輯檔)
+                            </span>
+                            <p class="text-xs text-slate-500 mt-1">請將此程式碼貼入 Google Apps Script 專案中。</p>
+                        </div>
+                        <button onclick="downloadCode('backend-code', 'Code.gs')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載檔案</button>
+                    </div>
+                    <div class="bg-yellow-50 border-b border-yellow-200 p-2 text-xs text-yellow-800 font-bold flex flex-col gap-1 px-4">
+                        <span class="flex items-center gap-1"><svg class="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg> 提醒事項：</span>
+                        <ul class="list-disc list-inside ml-2 text-yellow-700 font-normal">
+                            <li>您可直接於下方編輯區修改工作表名稱等設定。</li>
+                            <li>貼上程式碼後，請務必查看下方詳細部署教學。</li>
+                        </ul>
+                    </div>
+                    <!-- 使用 textarea 替換 div，實現直接編輯 -->
+                    <textarea id="backend-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-64 focus:outline-none focus:ring-2 focus:ring-emerald-500" wrap="off" spellcheck="false"></textarea>
+                    
+                    <!-- 新增 GAS 完整部署與 setupDatabase 說明 -->
+                    <div class="bg-emerald-50 border-t border-emerald-200 p-4 rounded-b-xl">
+                        <details class="group cursor-pointer" open>
+                            <summary class="font-bold text-emerald-800 text-sm flex items-center gap-2 select-none">
+                                <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                💡 必看教學：如何建立資料庫 (setupDatabase) 與取得 API 網址？
+                            </summary>
+                            <div class="mt-4 ml-6 text-sm text-emerald-700 space-y-3">
+                                <div>
+                                    <strong class="bg-emerald-200 px-2 py-0.5 rounded text-emerald-800">步驟一：一鍵建立試算表欄位 (只需執行一次)</strong>
+                                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                                        <li>將上方代碼貼入 Google Apps Script 編輯器後儲存。</li>
+                                        <li>在上方工具列的「函數下拉選單」中，選擇 <code>setupDatabase</code>。</li>
+                                        <li>點擊旁邊的「執行」按鈕。</li>
+                                        <li><strong class="text-red-600">⚠ 權限審查：</strong>Google 會跳出警告視窗，依序點擊「審查權限」➔ 選擇您的帳號 ➔ 點擊左下角「進階」➔「前往 (不安全)」➔ 最後點擊「允許」。</li>
+                                        <li>執行完成後，您的試算表就會自動產生好所需的工作表與標題欄位了！</li>
+                                    </ol>
+                                </div>
+                                <div>
+                                    <strong class="bg-emerald-200 px-2 py-0.5 rounded text-emerald-800">步驟二：發布並取得 GAS 網址</strong>
+                                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                                        <li>點選編輯器右上角的「部署」➔「新增部署作業」。</li>
+                                        <li>點擊左側齒輪 ⚙️ 選擇「網頁應用程式」。</li>
+                                        <li>設定「執行身分」為 <strong>我</strong>，設定「誰可以存取」為 <strong class="text-red-600">所有人 (Anyone)</strong>。</li>
+                                        <li>點擊「部署」，複製出現的網址。回到本系統將網址貼入上方的輸入框即可完成連動設定！</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- CF Worker (Optional) -->
+                <div id="worker-panel" class="hidden border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+                        <div>
+                            <span class="font-bold text-slate-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z"></path></svg>
+                                worker.js (跨域中介檔)
+                            </span>
+                            <p class="text-xs text-slate-500 mt-1">請將此程式碼貼入 Cloudflare Worker 專案中。</p>
+                        </div>
+                        <button onclick="downloadCode('worker-code', 'worker.js')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載檔案</button>
+                    </div>
+                    <!-- 使用 textarea 替換 div，實現直接編輯 -->
+                    <textarea id="worker-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-48 rounded-b-xl focus:outline-none focus:ring-2 focus:ring-blue-500" wrap="off" spellcheck="false"></textarea>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-start">
+                <button onclick="goToStep(3)" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold py-3 px-6 rounded-lg transition">🔙 回上一步修改設定</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400 py-6 text-center mt-auto text-sm border-t border-slate-700">
+        <p class="tracking-wide">車城國小資訊教學專用 @ 網頁程式設計輔助精靈</p>
+    </footer>
+
+    <script>
+        // ==========================================
+        // UI 互動邏輯：步驟切換與表單連動
+        // ==========================================
+        function goToStep(step) {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+            
+            // 更新進度條樣式
+            for(let i=1; i<=4; i++) {
+                const nav = document.getElementById(`nav-${i}`);
+                if(i === step) {
+                    nav.className = "px-3 py-1 bg-white text-slate-800 rounded-full shadow-sm font-bold flex-shrink-0";
+                } else if (i < step) {
+                    nav.className = "px-3 py-1 text-slate-300 font-bold cursor-pointer hover:text-white flex-shrink-0 transition";
+                    nav.setAttribute('onclick', `goToStep(${i})`);
+                } else {
+                    nav.className = "px-3 py-1 text-slate-300 opacity-50 flex-shrink-0";
+                    nav.removeAttribute('onclick');
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 當選擇後端範例時，自動同步前端的下拉選項
+        function syncFrontendSelection() {
+            const backendSelect = document.getElementById('backendTemplateSelector');
+            const frontendSelect = document.getElementById('frontendTemplateSelector');
+            if (backendSelect && frontendSelect) {
+                frontendSelect.value = backendSelect.value;
+            }
+        }
+
+        function toggleWorkerInput() {
+            const useWorker = document.getElementById('useCfWorker').checked;
+            document.getElementById('worker-guide').classList.toggle('hidden', !useWorker);
+            // 若在第4步改變勾選狀態，即時更新輸入框與程式碼
+            if(document.getElementById('step-4').classList.contains('active')) {
+                generateCode();
+            }
+        }
+
+        // ==========================================
+        // 程式碼生成引擎 (Templates & Builder)
+        // ==========================================
+        
+        // 根據選擇動態產生輸入欄位
+        function generateInputFields() {
+            const useWorker = document.getElementById('useCfWorker').checked;
+            const container = document.getElementById('input-fields-container');
+            container.innerHTML = '';
+
+            const createInput = (id, label, placeholder) => {
+                return `
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">${label}</label>
+                    <input type="text" id="${id}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-slate-300 bg-white shadow-sm" placeholder="${placeholder}" oninput="updateCodePreview()">
+                </div>`;
+            };
+
+            let html = '';
+            
+            // 決定需填寫的 URL 欄位
+            if (useWorker) {
+                html += createInput('input-gas', '⚙️ GAS WebApp 網址 (給 Worker 用的)', 'https://script.google.com/.../exec');
+                html += createInput('input-worker', '☁️ Worker 網址 (將覆寫至 index.html)', 'https://my-worker.xxxxx.workers.dev');
+            } else {
+                html += createInput('input-gas', '⚙️ GAS WebApp 網址 (將覆寫至 index.html)', 'https://script.google.com/.../exec');
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // 模版資料庫設定 (針對新需求重新調整表單選項)
+        // ==========================================
+        const codeTemplates = {
+            'basic_form': {
+                html: `<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本表單資料寫入</title>
+</head>
+<body>
+    <h2>表單資料寫入測試</h2>
+    <div>
+        <label>姓名：</label>
+        <input type="text" id="nameInput" placeholder="請輸入姓名">
+    </div>
+    <button onclick="submitData()">送出資料</button>
+    <div id="statusMsg"></div>
+
+    <script>
+        // 系統自動載入之 API 網址
+        const API_URL = '{{API_URL_TARGET}}';
+        
+        function submitData() {
+            const msgBox = document.getElementById('statusMsg');
+            msgBox.innerText = "資料傳送中...";
+            
+            const data = { name: document.getElementById('nameInput').value };
+            
+            // 使用 text/plain 避免跨域預檢請求
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+            })
+            .then(res => res.json())
+            .then(result => {
+                msgBox.innerText = result.message;
+            })
+            .catch(err => {
+                msgBox.innerText = "連線失敗，請檢查網址或權限設定。";
+            });
+        }
+    <\/script>
+</body>
+</html>`,
+                gas: `// [後端] 表單寫入 Google 試算表範例
+const SHEET_NAME = '基本表單紀錄';
+
+// 初始化函式：首次使用請手動在 GAS 編輯器執行此函式建表
+function setupDatabase() {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    if(!ss.getSheetByName(SHEET_NAME)) {
+        ss.insertSheet(SHEET_NAME).appendRow(['時間戳記', '姓名']);
+    }
+    SpreadsheetApp.getUi().alert('資料庫建置完成！');
+}
+
+// 接收前端 POST 請求
+function doPost(e) {
+    const headers = { 'Access-Control-Allow-Origin': '*' };
+    try {
+        const payload = JSON.parse(e.postData.contents);
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME)
+            .appendRow([new Date(), payload.name]);
+            
+        return ContentService.createTextOutput(JSON.stringify({message: '寫入成功'}))
+            .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+        return ContentService.createTextOutput(JSON.stringify({message: '錯誤: ' + err.toString()}))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
+}
+
+// 處理 OPTIONS 請求(安全防護)
+function doOptions() { return ContentService.createTextOutput(""); }`
+            },
+            'complete_app': {
+                html: `<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完整打卡系統</title>
+    <!-- 引入 Tailwind CSS 快速美化 -->
+    <script src="https://cdn.tailwindcss.com"><\/script>
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-black text-center text-blue-600 mb-6">📍 每日學習打卡系統</h2>
+        
+        <div class="space-y-5">
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">您的姓名</label>
+                <input type="text" id="userName" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="例如：車城小洋蔥">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">今日心情狀態</label>
+                <select id="userMood" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white transition">
+                    <option value="充滿活力 😄">充滿活力 😄</option>
+                    <option value="學習中 📖">學習中 📖</option>
+                    <option value="需要休息 😴">需要休息 😴</option>
+                </select>
+            </div>
+            <button onclick="submitCheckIn()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 active:transform active:scale-95 transition shadow-md">
+                傳送打卡紀錄
+            </button>
+        </div>
+        
+        <div id="statusMsg" class="mt-6 text-center text-sm font-bold text-slate-600 h-6"></div>
+    </div>
+
+    <script>
+        // 系統自動載入之 API 網址 (GAS 或 Worker 網址)
+        const API_URL = '{{API_URL_TARGET}}';
+        
+        function submitCheckIn() {
+            const msgBox = document.getElementById('statusMsg');
+            const name = document.getElementById('userName').value;
+            const mood = document.getElementById('userMood').value;
+            
+            if(!name.trim()) {
+                msgBox.innerHTML = "<span class='text-red-500'>⚠️ 請務必輸入姓名！</span>";
+                return;
+            }
+            
+            msgBox.innerHTML = "📡 資料上傳中，請稍候...";
+            
+            // 使用 text/plain 避免 CORS 預檢，完美相容無痕模式
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ name: name, mood: mood }),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+            })
+            .then(res => res.json())
+            .then(result => {
+                msgBox.innerHTML = "<span class='text-green-600'>✅ " + result.message + "</span>";
+                document.getElementById('userName').value = ''; // 清空欄位
+            })
+            .catch(err => {
+                msgBox.innerHTML = "<span class='text-red-500'>❌ 連線失敗，請檢查網址或權限設定。</span>";
+            });
+        }
+    <\/script>
+</body>
+</html>`,
+                gas: `// [後端] 完整打卡系統寫入範例 (含完整架構)
+const SHEET_NAME = '每日打卡紀錄表';
+
+// 【步驟一】初始化函式：在 GAS 編輯器選擇 setupDatabase 並點擊執行
+// 這將為您自動建立資料庫並加上美觀的標題格式！
+function setupDatabase() {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let sheet = ss.getSheetByName(SHEET_NAME);
+    
+    if(!sheet) {
+        // 新增工作表並寫入標題
+        sheet = ss.insertSheet(SHEET_NAME);
+        sheet.appendRow(['打卡時間', '姓名', '心情狀態']);
+        
+        // 美化標題列：粗體、背景色、凍結首列
+        sheet.getRange("A1:C1").setFontWeight("bold").setBackground("#dbeafe").setFontColor("#1e3a8a");
+        sheet.setFrozenRows(1);
+        
+        SpreadsheetApp.getUi().alert('🎉 資料庫與欄位建置完成！\\n請繼續點擊右上角「部署」➔「網頁應用程式」發布您的 API。');
+    } else {
+        SpreadsheetApp.getUi().alert('工作表已存在，不需重複建置。');
+    }
+}
+
+// 【步驟二】接收前端傳來的資料
+function doPost(e) {
+    // 設定跨域許可標頭
+    const headers = { 'Access-Control-Allow-Origin': '*' };
+    
+    try {
+        const payload = JSON.parse(e.postData.contents);
+        const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+        
+        // 將時間與前端傳遞的 name, mood 寫入下一列
+        sheet.appendRow([new Date(), payload.name, payload.mood]);
+            
+        return ContentService.createTextOutput(JSON.stringify({message: payload.name + ' 打卡成功！'}))
+            .setMimeType(ContentService.MimeType.JSON);
+            
+    } catch(err) {
+        return ContentService.createTextOutput(JSON.stringify({message: '系統錯誤: ' + err.toString()}))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
+}
+
+// 【必要防護】處理 OPTIONS 預檢請求，避免跨域阻擋
+function doOptions() { 
+    return ContentService.createTextOutput(""); 
+}`
+            }
+        };
+
+        const workerTemplate = `export default {
+  async fetch(request, env, ctx) {
+    // ❗ 此處需為您發布的 GAS WebApp URL
+    const GAS_URL = '{{GAS_URL}}';
+    
+    // 處理 CORS 預檢請求 (OPTIONS)
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        }
+      });
+    }
+
+    // 將前端的請求轉發給後端 GAS
+    const newRequest = new Request(GAS_URL, request);
+    let response = await fetch(newRequest);
+    let newResponse = new Response(response.body, response);
+    
+    // 強制補上跨域許可標頭回傳給前端
+    newResponse.headers.set("Access-Control-Allow-Origin", "*");
+    return newResponse;
+  }
+};`;
+
+        // 即時讀取輸入值並替換 Template 變數
+        function updateCodePreview() {
+            const backendType = document.getElementById('backendTemplateSelector').value;
+            const frontendType = document.getElementById('frontendTemplateSelector').value;
+            const useWorker = document.getElementById('useCfWorker').checked;
+            
+            // 取得輸入值 (若空則顯示提示字元)
+            const inputGas = document.getElementById('input-gas')?.value || '請輸入_GAS_WebApp_網址';
+            const inputWorker = document.getElementById('input-worker')?.value || '請輸入_Cloudflare_Worker_網址';
+
+            // 取得選擇的模版
+            let htmlCode = codeTemplates[frontendType].html;
+            let gasCode = codeTemplates[backendType].gas;
+            let wkCode = workerTemplate;
+
+            // 替換前端的 API 網址變數
+            const targetUrl = useWorker ? inputWorker : inputGas;
+            htmlCode = htmlCode.replace('{{API_URL_TARGET}}', targetUrl);
+
+            // 替換 Worker 內的變數
+            wkCode = wkCode.replace('{{GAS_URL}}', inputGas);
+
+            // 渲染到畫面上 (使用 textarea 的 value 屬性，讓使用者可以直接編輯)
+            document.getElementById('frontend-code').value = htmlCode;
+            document.getElementById('backend-code').value = gasCode;
+            
+            // 控制 Worker 面板顯示
+            const workerPanel = document.getElementById('worker-panel');
+            if(useWorker) {
+                workerPanel.classList.remove('hidden');
+                document.getElementById('worker-code').value = wkCode;
+            } else {
+                workerPanel.classList.add('hidden');
+            }
+        }
+
+        function generateCode() {
+            generateInputFields();
+            updateCodePreview();
+        }
+
+        // 下載檔案工具 (改為讀取 textarea.value)
+        function downloadCode(elementId, filename) {
+            const content = document.getElementById(elementId).value;
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 頁面載入預設執行
+        syncFrontendSelection();
+    </script>
+</body>
+</html>
