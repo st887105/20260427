@@ -1,10 +1,385 @@
+   💡 建議使用平板或桌上型電腦操作，以獲得最佳的程式碼編輯與下載體驗。
+    </div>
+
+    <!-- 頂部導航與進度條 -->
+    <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl md:text-2xl font-black flex items-center gap-2 tracking-wide">
+                車城國小｜網路程式設計輔助精靈
+            </h1>
+            
+            <div class="flex items-center gap-2 text-xs md:text-sm font-bold w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                <div id="nav-1" class="px-3 py-1 bg-white text-slate-800 rounded-full flex-shrink-0">1. 帳號準備</div>
+                <div class="text-slate-400">➔</div>
+@@ -49,6 +49,7 @@ <h1 class="text-xl md:text-2xl font-black flex items-center gap-2 tracking-wide"
+
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+
+        <!-- ==================== 步驟 1 ==================== -->
+        <div id="step-1" class="step-content active bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-blue-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">1</span> 帳號與環境準備
+@@ -91,12 +92,14 @@ <h3 class="text-lg font-bold text-slate-700 mb-3 flex items-center gap-2">
+            </div>
+        </div>
+
+        <!-- ==================== 步驟 2：前端 ==================== -->
+        <div id="step-2" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-indigo-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-indigo-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">2</span> 網站門面 (前端與中介)
+            </h2>
+
+            <div class="space-y-8">
+                <!-- 選擇 index.html 範例 -->
+                <div>
+                    <h3 class="text-lg font-bold text-slate-700 mb-4">2-1 選擇 index.html 前端範例</h3>
+
+@@ -105,19 +108,21 @@ <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            UI 範例選擇
+                        </h4>
+                        <!-- 選取前端時自動同步後端 -->
+                        <select id="frontendTemplateSelector" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium text-slate-700" onchange="syncBackendSelection();">
+                            <option value="system_logger">UI 範例一：資料傳送與系統參數抓取介面</option>
+                            <option value="ai_remedial">★ 專案範例：車城國小學力檢測AI補救系統</option>
+                            <option value="ai_remedial">★ 專案範例：車城國小學力檢測AI補救系統 (v13.2)</option>
+                            <option value="system_logger">UI 範例一：簡易測試資料回報介面</option>
+                        </select>
+                        <button onclick="confirmFrontendSelection(event)" class="mt-4 w-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-bold py-2.5 rounded-lg transition shadow-sm border border-indigo-200 flex justify-center items-center gap-2">
+                            ✅ 確認 UI 範例
+                        </button>
+                        <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                            確認後，後端 (GAS) 的範例將會自動與您的選擇對應，確保程式碼相容。
+                            確認後，後端 (GAS) 的範例將會自動與您的選擇對應，確保 API 完全相容。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cloudflare Worker -->
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 relative">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.33 10.22A5.5 5.5 0 008.67 9.04 4.5 4.5 0 004.5 17h14a3.5 3.5 0 00.83-6.78z"/></svg>
+@@ -129,7 +134,7 @@ <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+                        <input type="checkbox" id="useCfWorker" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-blue-500" onchange="toggleWorkerInput()">
+                        <div>
+                            <div class="font-bold text-slate-800">啟用 Cloudflare Worker</div>
+                            <div class="text-sm text-slate-500 mt-1">勾選後，系統將於第四步額外產生一份 worker.js。</div>
+                            <div class="text-sm text-slate-500 mt-1">勾選後，系統將於第四步額外產生一份 worker.js 中繼檔。</div>
+                        </div>
+                    </label>
+                </div>
+@@ -141,6 +146,7 @@ <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+            </div>
+        </div>
+
+        <!-- ==================== 步驟 3：後端 ==================== -->
+        <div id="step-3" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-emerald-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">3</span> 建造雲端大腦 (GAS 設定)
+@@ -151,20 +157,23 @@ <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center
+                    <h3 class="text-lg font-bold text-slate-700 mb-4">3-1 後端參數與對應設定</h3>
+                    <div class="grid md:grid-cols-2 gap-5">
+
+                        <!-- 自動對應的 Code.gs -->
+                        <div class="p-5 rounded-xl border border-emerald-200 bg-emerald-50 flex flex-col justify-center shadow-sm">
+                            <h4 class="font-bold text-emerald-800 mb-3 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                                已鎖定之後端 (Code.gs) 模組
+                            </h4>
+                            <!-- 設定為 disabled 唯讀狀態 -->
+                            <select id="backendTemplateSelector" class="w-full p-2.5 rounded-lg border border-slate-300 bg-slate-100 font-medium text-slate-500 cursor-not-allowed appearance-none" disabled>
+                                <option value="system_logger">核心模組：資料紀錄、使用次數與管理者設定</option>
+                                <option value="ai_remedial">★ 後端模組：車城國小學力檢測AI補救系統</option>
+                                <option value="ai_remedial">★ 後端模組：車城國小學力檢測AI補救系統 (v13.2)</option>
+                                <option value="system_logger">核心模組：簡易資料紀錄、使用次數與管理者設定</option>
+                            </select>
+                            <p class="text-xs text-emerald-600 mt-3 font-bold">
+                                系統已根據您在「前端 (UI)」的選擇，自動綁定對應的後端程式碼。
+                                系統已根據您在「前端 (UI)」的選擇，自動綁定了對應的後端程式碼。
+                            </p>
+                        </div>
+
+                        <!-- 建立雲端資料夾說明 (包含範例圖示) -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-center shadow-sm">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+@@ -190,19 +199,24 @@ <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+            </div>
+        </div>
+
+        <!-- ==================== 步驟 4 ==================== -->
+        <div id="step-4" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-purple-500">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center gap-3">
+                <span class="bg-purple-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">4</span> 程式碼產出中心
+            </h2>
+            <p class="text-slate-600 mb-6 text-sm">請於下方填寫對應的網址與 ID。填寫時，黑色框框內的程式碼會<strong class="text-purple-600">自動即時更新</strong>！</p>
+
+            <!-- 填空區 -->
+            <div class="bg-slate-50 p-6 rounded-xl mb-8 border border-slate-200 shadow-inner">
+                <div class="grid md:grid-cols-2 gap-5" id="input-fields-container">
+                    </div>
+                    <!-- 動態生成輸入框 -->
+                </div>
+            </div>
+
+            <!-- 程式碼顯示與下載區 -->
+            <div class="space-y-8">
+
+                <!-- Frontend HTML -->
+                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                        <div>
+@@ -216,20 +230,22 @@ <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center
+                    <textarea id="frontend-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-64 focus:outline-none focus:ring-2 focus:ring-indigo-500" wrap="off" spellcheck="false"></textarea>
+                </div>
+
+                <!-- Backend GAS -->
+                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+                        <div>
+                            <span class="font-bold text-slate-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
+                                Code.gs (後端邏輯檔)
+                            </span>
+                            <p class="text-xs text-slate-500 mt-1">請將此程式碼貼入 Google Apps Script 專案中。</p>
+                            <p class="text-xs text-slate-500 mt-1">請將此完整程式碼貼入 Google Apps Script 專案中。</p>
+                        </div>
+                        <button onclick="downloadCode('backend-code', 'Code.gs')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載檔案</button>
+                    </div>
+                    <textarea id="backend-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-64 focus:outline-none focus:ring-2 focus:ring-emerald-500" wrap="off" spellcheck="false"></textarea>
+                </div>
+
+                <!-- CF Worker (Optional) -->
+                <div id="worker-panel" class="hidden border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+                        <span class="font-bold text-slate-800 flex items-center gap-2">
+@@ -249,115 +265,17 @@ <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center
+
+    </main>
+
+    <script>
+        // ==========================================
+        // UI 互動邏輯：步驟切換與表單連動
+        // ==========================================
+        function goToStep(step) {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+            
+            for(let i=1; i<=4; i++) {
+                const nav = document.getElementById(`nav-${i}`);
+                if(i === step) {
+                    nav.className = "px-3 py-1 bg-white text-slate-800 rounded-full shadow-sm font-bold flex-shrink-0";
+                } else if (i < step) {
+                    nav.className = "px-3 py-1 text-slate-300 font-bold cursor-pointer hover:text-white flex-shrink-0 transition";
+                    nav.setAttribute('onclick', `goToStep(${i})`);
+                } else {
+                    nav.className = "px-3 py-1 text-slate-300 opacity-50 flex-shrink-0";
+                    nav.removeAttribute('onclick');
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 當前端下拉選單變更時，自動將後端 select 設為相同的值
+        function syncBackendSelection() {
+            const frontendSelect = document.getElementById('frontendTemplateSelector');
+            const backendSelect = document.getElementById('backendTemplateSelector');
+            if (frontendSelect && backendSelect) {
+                backendSelect.value = frontendSelect.value;
+            }
+        }
+
+        function confirmFrontendSelection(event) {
+            syncBackendSelection();
+            updateCodePreview();
+
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✨ 已鎖定並同步後端！';
+            btn.classList.add('bg-indigo-500', 'text-white');
+            btn.classList.remove('bg-indigo-100', 'text-indigo-800');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('bg-indigo-500', 'text-white');
+                btn.classList.add('bg-indigo-100', 'text-indigo-800');
+            }, 2000);
+        }
+    <footer class="bg-slate-800 text-slate-400 py-6 text-center mt-auto text-sm border-t border-slate-700">
+        <p class="tracking-wide">車城國小資訊教學專用 @ 網頁程式設計輔助精靈</p>
+    </footer>
+
+        function toggleWorkerInput() {
+            const useWorker = document.getElementById('useCfWorker').checked;
+            // 若在第4步改變勾選狀態，即時更新
+            if(document.getElementById('step-4').classList.contains('active')) {
+                generateCode();
+            }
+        }
+
+        function generateInputFields() {
+            const templateType = document.getElementById('frontendTemplateSelector').value;
+            const useWorker = document.getElementById('useCfWorker').checked;
+            const container = document.getElementById('input-fields-container');
+            container.innerHTML = '';
+    <!-- ======================================================================
+         📦 模板儲存區 (使用 script type="text/template" 避免跳脫字元錯誤) 
+         ====================================================================== -->
+
+            const createInput = (id, label, placeholder) => {
+                return `
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">${label}</label>
+                    <input type="text" id="${id}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-slate-300 bg-white shadow-sm" placeholder="${placeholder}" oninput="updateCodePreview()">
+                </div>`;
+            };
+
+            let html = '';
+            
+            if (useWorker) {
+                html += createInput('input-gas', '⚙️ GAS WebApp 網址 (給 Worker 用的)', 'https://script.google.com/.../exec');
+                html += createInput('input-worker', '☁️ Worker 網址 (將覆寫至 index.html)', 'https://my-worker.xxxxx.workers.dev');
+            } else {
+                html += createInput('input-gas', '⚙️ GAS WebApp 網址 (將覆寫至 index.html)', 'https://script.google.com/.../exec');
+            }
+
+            // 根據不同專案，產生需要的變數填寫欄位
+            if (templateType === 'system_logger') {
+                html += createInput('input-admin-url', '🔗 管理者的網址連結', '請填入您的管理者專屬 GitHub 或網站網址');
+                html += createInput('input-folder-id', '📁 範例資料夾 ID', '請填入雲端硬碟的範例資料夾 ID');
+            } else if (templateType === 'ai_remedial') {
+                html += createInput('input-folder-id', '📁 存放結果的資料夾 ID', '請填入雲端硬碟資料夾 ID');
+                html += createInput('input-admin-url', '🔗 補救教學資源網址', '請填入您的資源站連結');
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // 🛠️ 【管理者設定區】範例擴充與模板設定
+        // ==========================================
+        /*
+          老師您好：
+          若您未來在雲端硬碟建立新的範例（例如 .gs 與 .index 檔），
+          想要加入這個系統讓學生選擇，請依照以下步驟：
+          
+          1. 複製下方 `ai_remedial` 的格式，新增一組 key (例如 'new_project')。
+          2. 將您的 `.index` 內容貼入 `html:` 的反引號 (\`) 中。
+          3. 將您的 `.gs` 內容貼入 `gas:` 的反引號 (\`) 中。
+          4. 記得在 HTML 代碼上方，分別於 `frontendTemplateSelector` 與 `backendTemplateSelector` 中，
+             新增 `<option value="new_project">您的專案名稱</option>`。
+        */
+
+        const codeTemplates = {
+            'system_logger': {
+                html: `<!DOCTYPE html>
+    <!-- 【範例一】簡易資料紀錄 (System Logger) 前端 -->
+    <script type="text/template" id="tpl-sys-html">
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>系統資料回報與設定抓取</title></head>
+<body>
+@@ -399,8 +317,12 @@ <h3>📥 獲取系統設定</h3>
+        }
+    <\/script>
+</body>
+</html>`,
+                gas: `const SHEET_NAME = '系統使用與資料紀錄表';
+</html>
+    </script>
+
+    <!-- 【範例一】簡易資料紀錄 (System Logger) 後端 -->
+    <script type="text/template" id="tpl-sys-gas">
+const SHEET_NAME = '系統使用與資料紀錄表';
+const ADMIN_URL = '{{ADMIN_URL}}'; 
+const FOLDER_ID = '{{FOLDER_ID}}';
+
+@@ -424,91 +346,1196 @@ <h3>📥 獲取系統設定</h3>
+    if (callback) return ContentService.createTextOutput(callback + "(" + JSON.stringify(responseData) + ")").setMimeType(ContentService.MimeType.JAVASCRIPT);
+    return ContentService.createTextOutput(JSON.stringify(responseData)).setMimeType(ContentService.MimeType.JSON);
+}
+function doOptions() { return ContentService.createTextOutput(""); }`
+            },
+            
+            // 💡 管理者自訂範例區：車城國小學力檢測AI補救系統
+            'ai_remedial': {
+                html: `<!DOCTYPE html>
+function doOptions() { return ContentService.createTextOutput(""); }
+    </script>
+
+    <!-- 【範例二】車城國小學力檢測AI補救系統 前端 -->
+    <script type="text/template" id="tpl-ai-html">
+<!-- 
+  老師請注意：因為您的 .index 檔案高達 55KB，
+  這裡先放入您的前端 API 網址設定。
+  下載後，請將您原本 55KB 的前端程式碼內容，直接貼進這份檔案取代此段註解即可！
+-->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>車城國小學力檢測AI補救系統</title>
+    <title>車城國小學力檢測AI補救系統 (前端載入提示)</title>
+</head>
+<body>
+    <h1>🎯 學力檢測與補救教學中心</h1>
+    <p>這是一個示範讀取雲端硬碟教學檔案，並回傳測驗結果的系統模組。</p>
+    
+    <div>
+        <label>輸入學生學號：</label>
+        <input type="text" id="studentId">
+        <button onclick="getRemedialData()">讀取補救資源</button>
+    </div>
+    
+    <div id="resultBox" style="margin-top:20px; padding:10px; background:#f0f0f0;"></div>
+
+    <h1>車城國小學力檢測AI補救系統</h1>
+    <p style="color:red; font-weight:bold;">
+      ※ 請用文字編輯器開啟這份下載的 index.html 檔案，將您 55KB 的完整前端程式碼貼在這邊覆蓋掉我。
+    </p>
+    <script>
+        // 這是系統自動為您填入的連線網址，請複製此行到您原本的程式碼中替換掉舊的 API_URL
+        const API_URL = '{{API_URL_TARGET}}';
+        
+        function getRemedialData() {
+            const sid = document.getElementById('studentId').value;
+            const box = document.getElementById('resultBox');
+            box.innerText = "資源讀取中...";
+            
+            // 呼叫 GAS 取得對應的雲端硬碟補救教學連結 (GET JSONP)
+            const script = document.createElement('script');
+            const callbackName = 'ai_cb_' + Math.round(100000 * Math.random());
+            
+            window[callbackName] = function(data) {
+                box.innerHTML = 
+                    "<strong>為學號 " + sid + " 安排的資源：</strong><br>" + 
+                    "📁 資源資料夾 ID: " + data.folderId + "<br>" +
+                    "🔗 線上學習站: <a href='" + data.adminUrl + "' target='_blank'>點此進入</a>";
+            };
+            script.src = API_URL + "?action=getMaterial&callback=" + callbackName;
+            document.body.appendChild(script);
+        }
+    <\/script>
+</body>
+</html>`,
+                gas: `/**
+ * 車城國小學力檢測AI補救系統 - GAS 後端模組
+ * 負責連接學力檢測資料庫，並提供對應的雲端硬碟檔案連結。
+ */
+</html>
+    </script>
+
+    <!-- 【範例二】車城國小學力檢測AI補救系統 後端 (完整載入 v13.2 包含連線檢測與自動填寫 ID) -->
+    <script type="text/template" id="tpl-ai-gas">
 // ============================================================
 // 車城國小學力檢測AI補救系統 - Google Apps Script 後端 v13.2
-// 搭配前端 v13.2 | 部署設定：執行身分=我，存取=任何人
+// 搭配前端 v13.2
 // ============================================================
 
+// 系統參數
+const REMEDIAL_FOLDER_ID = '{{FOLDER_ID}}';
+const SYSTEM_URL = '{{ADMIN_URL}}';
 // ==========================================
-// 🟢 測試專用函數（部署前先執行確認）
+// 🟢 測試專用函數
 // ==========================================
 function testBackend() {
   Logger.log("✅ 後端基礎語法無誤！v13.2");
@@ -32,21 +407,43 @@ function doOptions(e) {
 }
 
 function doGet(e) {
+    // 預防跨域阻擋，使用 JSONP 封裝回傳內容
+    const responseData = {
+        status: 'success',
+        folderId: REMEDIAL_FOLDER_ID,
+        adminUrl: SYSTEM_URL,
+        message: '學力檢測資源已成功派發'
+    };
+    
+    const callback = e.parameter.callback;
+    if (callback) {
+        return ContentService.createTextOutput(callback + "(" + JSON.stringify(responseData) + ")")
+                             .setMimeType(ContentService.MimeType.JAVASCRIPT);
   if (!e) {
-    return ContentService.createTextOutput("⚠️ 這是車城國小學力檢測 API 後端 v13.2。請透過網頁前端呼叫，請勿在編輯器中手動執行。");
+    return ContentService.createTextOutput("⚠️ 這是車城國小學力檢測 API 後端 v13.2。請透過網頁前端呼叫。請勿在編輯器中手動執行。");
   }
+
   try {
     var raw = e.parameter.payload || '{}';
     var payload = JSON.parse(raw);
     var action = payload.action || 'ping';
     var data = payload.data || {};
     var callback = e.parameter.callback || '';
+
     var result = (action === 'ping') ? 'API v13.2 運作中' : handleAction(action, data);
     var responseJson = JSON.stringify({ status: 'success', data: result });
+
+    // 若前端要求 JSONP（有 callback 參數）
     if (callback && callback !== '_noop' && /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(callback)) {
-      return ContentService.createTextOutput(callback + '(' + responseJson + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
+      return ContentService
+        .createTextOutput(callback + '(' + responseJson + ')')
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
     }
-    return ContentService.createTextOutput(responseJson).setMimeType(ContentService.MimeType.JSON);
+
+    return ContentService
+      .createTextOutput(responseJson)
+      .setMimeType(ContentService.MimeType.JSON);
+
   } catch (err) {
     Logger.log('[doGet Error] ' + err.message + '\n' + err.stack);
     var errJson = JSON.stringify({ status: 'error', message: err.message });
@@ -54,16 +451,24 @@ function doGet(e) {
     if (cb && cb !== '_noop' && /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(cb)) {
       return ContentService.createTextOutput(cb + '(' + errJson + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
     }
+    return ContentService.createTextOutput(JSON.stringify(responseData))
+                         .setMimeType(ContentService.MimeType.JSON);
     return ContentService.createTextOutput(errJson).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 function doPost(e) {
+    // 預留學生提交測驗成績的接收口
+    return ContentService.createTextOutput(JSON.stringify({status: 'ok'}))
+                         .setMimeType(ContentService.MimeType.JSON);
   if (!e) {
-    return ContentService.createTextOutput("⚠️ 錯誤：這是一個 API 端點，必須由網頁前端發送 POST 請求來觸發，請勿在編輯器中手動執行。");
+    return ContentService.createTextOutput("⚠️ 錯誤：這是一個 API 端點，必須由網頁前端發送 POST 請求來觸發。請勿在編輯器中手動執行。");
   }
+
   try {
     var raw = '';
+
+    // 優先讀取 text/plain 直接傳送的 JSON（前端大資料模式）
     if (e.postData && e.postData.contents) {
       var contents = e.postData.contents;
       if (contents.startsWith('{') || contents.startsWith('[')) {
@@ -78,14 +483,22 @@ function doPost(e) {
     } else {
       raw = '{}';
     }
+
     var payload = JSON.parse(raw);
     var action = payload.action;
     var data = payload.data || {};
+
     var result = handleAction(action, data);
-    return ContentService.createTextOutput(JSON.stringify({ status: 'success', data: result })).setMimeType(ContentService.MimeType.JSON);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'success', data: result }))
+      .setMimeType(ContentService.MimeType.JSON);
+
   } catch (err) {
     Logger.log('[doPost Error] ' + err.message + '\n' + err.stack);
-    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.message })).setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -131,6 +544,7 @@ function handleAction(action, data) {
   }
 }
 
+function doOptions() { return ContentService.createTextOutput(""); }`
 // ==========================================
 // 🗄️ 資料庫初始化
 // ==========================================
@@ -138,6 +552,7 @@ function setupDatabase() {
   var ss  = SpreadsheetApp.getActiveSpreadsheet();
   var log = [];
 
+  // Config 分頁
   var cfg = ss.getSheetByName('Config');
   if (!cfg) {
     cfg = ss.insertSheet('Config');
@@ -159,8 +574,9 @@ function setupDatabase() {
     }
   }
 
-  addIfMissing('PdfFolderId', '', 'PDF資料夾ID');
-  addIfMissing('HelpUrl', '', '操作說明網址');
+  // 自動綁定懶人包傳入的變數
+  addIfMissing('PdfFolderId', '{{FOLDER_ID}}', 'PDF資料夾ID');
+  addIfMissing('HelpUrl', '{{ADMIN_URL}}', '操作說明網址');
   addIfMissing('GeminiModel', 'gemma-4-31b-it', 'GeminiModel');
   addIfMissing('IsPaidAccount', 'false', 'IsPaidAccount');
   addIfMissing('MathPrompt',
@@ -180,14 +596,19 @@ function setupDatabase() {
     '[{"node":"節點名稱","level":"C","text":"題目內容","type":"single","options":["選項A","選項B","選項C","選項D"],"answer":"A","difficulty":"medium","hint":"解題提示"}]',
     '國語出題 Prompt');
   addIfMissing('MathWorksheetPrompt',
-    '請為「{{GRADE}}」學生設計一份 A4 補救學習單（完整 HTML 格式）。\n弱點節點：\n{{NODES}}\n\n' +
-    '要求：\n1. 包含概念說明、例題、練習題（Level C/B/A 各2題）、解答欄\n2. 使用 CSS 讓版面美觀，適合列印\n3. 輸出完整 HTML（包含 <!DOCTYPE html>）',
+    '請為「{{GRADE}}」學生設計一份 A4 補救學習單（完整 HTML 格式）。\n' +
+    '弱點節點：\n{{NODES}}\n\n' +
+    '要求：\n1. 包含概念說明、例題、練習題（Level C/B/A 各2題）、解答欄\n' +
+    '2. 使用 CSS 讓版面美觀，適合列印\n3. 輸出完整 HTML（包含 <!DOCTYPE html>）',
     '數學學習單 Prompt');
   addIfMissing('ChineseWorksheetPrompt',
-    '請為「{{GRADE}}」學生設計一份 A4 補救學習單（完整 HTML 格式）。\n弱點節點：\n{{NODES}}\n\n' +
-    '要求：\n1. 包含閱讀文本、字詞練習、閱讀理解題（Level C/B/A 各2題）、解答欄\n2. 使用 CSS 讓版面美觀，適合列印\n3. 輸出完整 HTML（包含 <!DOCTYPE html>）',
+    '請為「{{GRADE}}」學生設計一份 A4 補救學習單（完整 HTML 格式）。\n' +
+    '弱點節點：\n{{NODES}}\n\n' +
+    '要求：\n1. 包含閱讀文本、字詞練習、閱讀理解題（Level C/B/A 各2題）、解答欄\n' +
+    '2. 使用 CSS 讓版面美觀，適合列印\n3. 輸出完整 HTML（包含 <!DOCTYPE html>）',
     '國語學習單 Prompt');
 
+  // 各資料分頁
   var sheetDefs = {
     'Bank':    ['ID', '知識節點', '題目', '類型', '選項(JSON)', '正解', '難度', '適用年級', '科目', '解析'],
     'Tasks':   ['任務名稱', '適用年級', '科目', '建立時間', '學生人數', '弱點節點(JSON)'],
@@ -195,20 +616,17 @@ function setupDatabase() {
     'History': ['上傳時間', '任務名稱', '適用年級', '科目', '學生人數', '班級弱點節點'],
     'Results': ['測驗時間', '任務名稱', '座號', '姓名', '分數', '作答歷時(秒)', '作答明細(JSON)']
   };
+
   Object.keys(sheetDefs).forEach(function(name) {
     if (!ss.getSheetByName(name)) {
       var sh = ss.insertSheet(name);
       sh.appendRow(sheetDefs[name]);
-      sh.setFrozenRows(1);
       log.push('✅ ' + name + ' 分頁已建立');
     }
   });
 
   try { CacheService.getScriptCache().remove('BankData_V3'); } catch(e) {}
-  
-  var msg = '✅ 資料庫初始化完成！\n' + log.join('\n');
-  try { SpreadsheetApp.getUi().alert(msg); } catch(e) {}
-  return msg;
+  return '✅ 資料庫初始化完成！\n' + log.join('\n');
 }
 
 // ==========================================
@@ -283,7 +701,10 @@ function updateSystemPrompts(mathP, chineseP, mathWS, chineseWS, pwd) {
 }
 function getGeminiSettings() {
   var c = getConfig();
-  return { model: String(c.GeminiModel || 'gemma-4-31b-it'), isPaid: String(c.IsPaidAccount || 'false').toLowerCase() === 'true' };
+  return {
+    model: String(c.GeminiModel || 'gemma-4-31b-it'),
+    isPaid: String(c.IsPaidAccount || 'false').toLowerCase() === 'true'
+  };
 }
 function updateGeminiSettings(model, isPaid, pwd) {
   if (!verifyAdmin(pwd)) throw new Error('密碼錯誤！');
@@ -308,56 +729,101 @@ function updateHelpUrl(url, pwd) {
 // ==========================================
 function _callGemini(prompt, maxTokens, jsonMode) {
   if (!prompt) throw new Error('傳入的 AI 提示詞為空！');
+
   var cfg    = getConfig();
   var apiKey = String(cfg.GeminiAPIKey || '').trim();
   var preferred = String(cfg.GeminiModel || 'gemma-4-31b-it').trim();
-  if (!apiKey || apiKey.indexOf('請在此') >= 0) throw new Error('請先在 Config 試算表設定 Gemini API 金鑰！');
+
+  if (!apiKey || apiKey.indexOf('請在此') >= 0) {
+    throw new Error('請先在 Config 試算表設定 Gemini API 金鑰！');
+  }
+
   var FALLBACK_MODELS = ['gemma-4-31b-it', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
   var modelsToTry = [preferred].concat(FALLBACK_MODELS.filter(function(m) { return m !== preferred; }));
+
   var genConfig = { temperature: 0.65, maxOutputTokens: maxTokens || 2048 };
   if (jsonMode) genConfig.responseMimeType = 'application/json';
-  var body = JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: genConfig });
+
+  var body = JSON.stringify({
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: genConfig
+  });
+
   var lastError = '尚未嘗試任何模型';
+
   for (var mi = 0; mi < modelsToTry.length; mi++) {
     var model = modelsToTry[mi];
     var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + apiKey;
+
     for (var retry = 0; retry < 2; retry++) {
       var resp, result;
       try {
-        resp = UrlFetchApp.fetch(url, { method: 'post', contentType: 'application/json', payload: body, muteHttpExceptions: true, deadline: 55 });
+        resp = UrlFetchApp.fetch(url, {
+          method: 'post',
+          contentType: 'application/json',
+          payload: body,
+          muteHttpExceptions: true,
+          deadline: 55
+        });
       } catch(networkErr) {
         lastError = '網路錯誤：' + String(networkErr.message || networkErr).substring(0, 60);
         if (retry < 1) Utilities.sleep(3000);
         continue;
       }
+
       var rawText = '';
       try { rawText = resp.getContentText(); } catch(e) {}
-      if (!rawText || rawText.trim().charAt(0) === '<') { lastError = model + '：回傳非 JSON'; break; }
-      try { result = JSON.parse(rawText); } catch(e) { lastError = model + '：JSON 解析失敗'; break; }
+
+      if (!rawText || rawText.trim().charAt(0) === '<') {
+        lastError = model + '：回傳非 JSON（可能是 HTML 錯誤頁）';
+        break;
+      }
+
+      try { result = JSON.parse(rawText); } catch(e) {
+        lastError = model + '：JSON 解析失敗';
+        break;
+      }
+
       if (!result.error) {
+        // 成功！從 parts 中取出文字（從後往前找，跳過 thinking token）
         try {
           var parts = result.candidates[0].content.parts || [];
           var text = '';
           for (var pi = parts.length - 1; pi >= 0; pi--) {
-            if (parts[pi].text && parts[pi].text.trim()) { text = parts[pi].text; break; }
+            if (parts[pi].text && parts[pi].text.trim()) {
+              text = parts[pi].text;
+              break;
+            }
           }
           if (!text) text = (parts[0] || {}).text || '';
           return text;
-        } catch(e) { lastError = model + '：candidates 解析失敗 - ' + e.message; break; }
+        } catch(e) {
+          lastError = model + '：candidates 解析失敗 - ' + e.message;
+          break;
+        }
       }
+
       var code = Number(result.error.code || 0);
       var msg  = String(result.error.message || '');
       lastError = model + ' [' + code + '] ' + msg.substring(0, 100);
+
       if (code === 429 || msg.indexOf('quota') >= 0 || msg.indexOf('RESOURCE_EXHAUSTED') >= 0) {
         Logger.log('⏳ ' + model + ' 配額限制，等待後重試…');
         Utilities.sleep(retry === 0 ? 20000 : 50000);
         continue;
       }
-      if (code === 404 || msg.indexOf('not found') >= 0 || msg.indexOf('not supported') >= 0) { break; }
-      if (code === 403 || msg.indexOf('API key') >= 0) throw new Error('API 金鑰無效或無權限。請至 Google AI Studio 確認金鑰設定。');
+      if (code === 404 || msg.indexOf('not found') >= 0 || msg.indexOf('not supported') >= 0) {
+        Logger.log('⚠️ ' + model + ' 不存在，嘗試下一個模型');
+        break; // 跳到下一個模型
+      }
+      if (code === 403 || msg.indexOf('API key') >= 0) {
+        throw new Error('API 金鑰無效或無權限。請至 Google AI Studio 確認金鑰設定。');
+      }
+
       throw new Error('Gemini ' + code + '：' + msg.substring(0, 150));
     }
   }
+
   throw new Error('所有模型均無法使用。最後錯誤：' + lastError);
 }
 
@@ -370,11 +836,19 @@ function _tryJSON(str, fallback) {
 
 function _parseAI(text) {
   var s = String(text || '').trim();
+  // 去除 markdown 包裝
   s = s.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/, '').trim();
+  // 找到第一個 [ 和最後一個 ]
   var start = s.indexOf('[');
   var end   = s.lastIndexOf(']');
-  if (start >= 0 && end > start) s = s.substring(start, end + 1);
-  try { return JSON.parse(s); } catch(e) {
+  if (start >= 0 && end > start) {
+    s = s.substring(start, end + 1);
+  }
+  try {
+    return JSON.parse(s);
+  } catch(e) {
+    Logger.log('_parseAI 失敗，嘗試修復：' + e.message);
+    // 嘗試修復常見問題（尾部逗號）
     s = s.replace(/,\s*([}\]])/g, '$1');
     try { return JSON.parse(s); } catch(e2) { return []; }
   }
@@ -398,6 +872,8 @@ function uploadTaskData(taskName, grade, subject, studentData, uniqueNodes) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var stdData = (studentData || []).filter(function(s) { return s && String(s.number || '').trim(); });
   var uNodes  = (uniqueNodes  || []).filter(_isValid);
+
+  // 更新 Tasks 分頁
   var tasksSheet = ss.getSheetByName('Tasks');
   if (!tasksSheet) throw new Error('Tasks 分頁不存在，請先初始化資料庫');
   var taskRows = tasksSheet.getDataRange().getValues();
@@ -408,6 +884,8 @@ function uploadTaskData(taskName, grade, subject, studentData, uniqueNodes) {
   var taskRow = [taskName, grade, subject, new Date().toLocaleString('zh-TW'), stdData.length, JSON.stringify(uNodes)];
   if (taskRowIdx > 0) tasksSheet.getRange(taskRowIdx, 1, 1, 6).setValues([taskRow]);
   else               tasksSheet.appendRow(taskRow);
+
+  // 更新 Students 分頁（先刪除同任務舊資料）
   var studSheet = ss.getSheetByName('Students');
   if (studSheet && studSheet.getLastRow() > 1) {
     var sRows = studSheet.getDataRange().getValues();
@@ -417,13 +895,23 @@ function uploadTaskData(taskName, grade, subject, studentData, uniqueNodes) {
   }
   if (studSheet && stdData.length > 0) {
     var studRows = stdData.map(function(s) {
-      return [taskName, String(s.number || '').trim(), String(s.name || '').trim(), JSON.stringify((s.weakNodes || []).filter(_isValid))];
+      return [
+        taskName,
+        String(s.number || '').trim(),
+        String(s.name || '').trim(),
+        JSON.stringify((s.weakNodes || []).filter(_isValid))
+      ];
     });
     studSheet.getRange(studSheet.getLastRow() + 1, 1, studRows.length, 4).setValues(studRows);
   }
+
+  // History 紀錄
   var hist = ss.getSheetByName('History');
   if (hist) hist.appendRow([new Date().toLocaleString('zh-TW'), taskName, grade, subject, stdData.length, JSON.stringify(uNodes)]);
+
+  // 建立任務專屬分頁
   _createTaskSheet(ss, taskName, grade, subject, stdData, uNodes);
+
   return { taskName: taskName, studentCount: stdData.length, nodes: uNodes };
 }
 
@@ -444,14 +932,23 @@ function _createTaskSheet(ss, taskName, grade, subject, studentData, uniqueNodes
     sheet.getRange(rows.length + 2, 1, 1, 2).setValues([['班級弱點節點匯總', (uniqueNodes || []).join('、')]]);
     sheet.getRange(1, 1, 1, 4).setBackground('#1e88e5').setFontColor('#fff').setFontWeight('bold');
     sheet.getRange(3, 1, 1, 4).setBackground('#e3f2fd').setFontWeight('bold');
-  } catch(e) { Logger.log('_createTaskSheet 失敗：' + e.message); }
+  } catch(e) {
+    Logger.log('_createTaskSheet 失敗：' + e.message);
+  }
 }
 
 function getTasks() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tasks');
   if (!sheet || sheet.getLastRow() < 2) return [];
   return sheet.getDataRange().getValues().slice(1).filter(function(r) { return r[0]; }).map(function(r) {
-    return { taskName: String(r[0]), grade: String(r[1]), subject: String(r[2]), createdAt: String(r[3]), studentCount: Number(r[4]), weakNodes: _tryJSON(r[5], []) };
+    return {
+      taskName: String(r[0]),
+      grade: String(r[1]),
+      subject: String(r[2]),
+      createdAt: String(r[3]),
+      studentCount: Number(r[4]),
+      weakNodes: _tryJSON(r[5], [])
+    };
   });
 }
 
@@ -467,7 +964,12 @@ function getStudents(taskName) {
         var m = number.match(/號\s*([\u4e00-\u9fa5]{2,4})(?:\s+\d+)?$/);
         if (m) { name = m[1]; number = number.replace(/\s+[\u4e00-\u9fa5]{2,4}(?:\s+\d+)?$/, '').trim(); }
       }
-      return { taskName: String(r[0]), number: number, name: name.replace(/\s*\d+\s*$/, '').trim(), weakNodes: _tryJSON(r[3], []).filter(_isValid) };
+      return {
+        taskName: String(r[0]),
+        number: number,
+        name: name.replace(/\s*\d+\s*$/, '').trim(),
+        weakNodes: _tryJSON(r[3], []).filter(_isValid)
+      };
     });
 }
 
@@ -498,7 +1000,10 @@ function extractPdfText(fileId) {
     Drive.Files.remove(docId);
     try { cache.put(key, text, 3600); } catch(e) {}
     return text;
-  } catch(e) { Logger.log('extractPdfText 失敗：' + e.message); return ''; }
+  } catch(e) {
+    Logger.log('extractPdfText 失敗：' + e.message);
+    return '';
+  }
 }
 
 // ==========================================
@@ -514,30 +1019,46 @@ function _buildPrompt(subject, grade, nodes, qcount, pdfText, mode) {
       : '\n\n【教材（必須依據此教材出題）】\n---\n' + pdfText + '\n---';
   }
   var tpl = (subject === '國語') ? String(cfg.ChinesePrompt || '') : String(cfg.MathPrompt || '');
-  return tpl.replace(/\{\{GRADE\}\}/g, grade).replace(/\{\{NODES\}\}/g, nodeList)
-    .replace(/\{\{QCOUNT\}\}/g, String(qcount || 1)).replace(/\{\{PDF_CONTEXT\}\}/g, pdfSection);
+  return tpl
+    .replace(/\{\{GRADE\}\}/g, grade)
+    .replace(/\{\{NODES\}\}/g, nodeList)
+    .replace(/\{\{QCOUNT\}\}/g, String(qcount || 1))
+    .replace(/\{\{PDF_CONTEXT\}\}/g, pdfSection);
 }
 
 function _buildGeneralPrompt(subject, grade, qcount) {
   if (subject === '國語') {
-    return '請為「' + grade + '」國小學生出 ' + qcount + ' 題基礎國語練習題（字音、字義、閱讀理解各類型均可）。\n只輸出 JSON 陣列（不要有其他文字）：\n[{"node":"基礎練習","level":"C","text":"題目內容","type":"single","options":["A","B","C","D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]';
+    return '請為「' + grade + '」國小學生出 ' + qcount + ' 題基礎國語練習題（字音、字義、閱讀理解各類型均可）。\n' +
+           '只輸出 JSON 陣列（不要有其他文字）：\n' +
+           '[{"node":"基礎練習","level":"C","text":"題目內容","type":"single","options":["A","B","C","D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]';
   }
-  return '請為「' + grade + '」國小學生出 ' + qcount + ' 題基礎數學練習題（四則運算、分數、小數各類型均可）。\n只輸出 JSON 陣列（不要有其他文字）：\n[{"node":"基礎練習","level":"D","text":"題目內容","type":"single","options":["A","B","C","D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]';
+  return '請為「' + grade + '」國小學生出 ' + qcount + ' 題基礎數學練習題（四則運算、分數、小數各類型均可）。\n' +
+         '只輸出 JSON 陣列（不要有其他文字）：\n' +
+         '[{"node":"基礎練習","level":"D","text":"題目內容","type":"single","options":["A","B","C","D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]';
 }
 
 function _doGenerateBatch(nodesArray, grade, subject, batchIndex, pdfText, mode) {
   var BATCH_SIZE = 5;
   var QCOUNT     = 3;
+
   var validNodes = (nodesArray || []).map(function(n) { return String(n || '').trim(); }).filter(_isValid);
   var nodeBatches = [];
   for (var i = 0; i < validNodes.length; i += BATCH_SIZE) {
     nodeBatches.push({ nodes: validNodes.slice(i, i + BATCH_SIZE), isGeneral: false });
   }
-  if (validNodes.length === 0) nodeBatches.push({ nodes: ['通用基礎練習'], isGeneral: true });
+  if (validNodes.length === 0) {
+    nodeBatches.push({ nodes: ['通用基礎練習'], isGeneral: true });
+  }
+
   var total = nodeBatches.length;
-  if (batchIndex >= total) return { done: true, current: total, total: total, message: '✅ 全部完成' };
+  if (batchIndex >= total) {
+    return { done: true, current: total, total: total, message: '✅ 全部完成' };
+  }
+
   var batch  = nodeBatches[batchIndex];
   var isLast = (batchIndex + 1 >= total);
+
+  // Bank-First：檢查題庫是否已有足夠題目
   if (!batch.isGeneral) {
     var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
     if (bank && bank.getLastRow() >= 2) {
@@ -545,22 +1066,36 @@ function _doGenerateBatch(nodesArray, grade, subject, batchIndex, pdfText, mode)
       var nodesToGenerate = batch.nodes.filter(function(node) {
         var count = bankRows.filter(function(r) {
           var nd = String(r[1] || '');
-          return (nd.indexOf(node) >= 0 || node.indexOf(nd) >= 0) && (!grade || String(r[7] || '') === grade) && (!subject || String(r[8] || '') === subject);
+          return (nd.indexOf(node) >= 0 || node.indexOf(nd) >= 0) &&
+                 (!grade   || String(r[7] || '') === grade) &&
+                 (!subject || String(r[8] || '') === subject);
         }).length;
         return count < QCOUNT;
       });
-      if (nodesToGenerate.length === 0) return { done: isLast, current: batchIndex + 1, total: total, addedThisBatch: 0, message: '✅ 第' + (batchIndex + 1) + '批 Bank-First 命中（跳過出題）' };
+      if (nodesToGenerate.length === 0) {
+        return { done: isLast, current: batchIndex + 1, total: total, addedThisBatch: 0, message: '✅ 第' + (batchIndex + 1) + '批 Bank-First 命中（跳過出題）' };
+      }
       batch = { nodes: nodesToGenerate, isGeneral: false };
     }
   }
-  var prompt   = batch.isGeneral ? _buildGeneralPrompt(subject, grade, 10) : _buildPrompt(subject, grade, batch.nodes, QCOUNT, pdfText, mode || 'ai');
+
+  // 組合 Prompt
+  var prompt   = batch.isGeneral
+    ? _buildGeneralPrompt(subject, grade, 10)
+    : _buildPrompt(subject, grade, batch.nodes, QCOUNT, pdfText, mode || 'ai');
   var maxTok   = batch.isGeneral ? 3072 : Math.min(8192, batch.nodes.length * QCOUNT * 500 + 512);
-  var rawText  = _callGemini(prompt, maxTok, true);
+
+  // 呼叫 Gemini
+  var rawText   = _callGemini(prompt, maxTok, true);
   var questions = [];
   try {
     var parsed = _parseAI(rawText);
-    questions = parsed.filter(function(q) { return q && q.text && Array.isArray(q.options) && q.options.length >= 2; });
-  } catch(e) { Logger.log('題目解析失敗：' + e.message); }
+    questions  = parsed.filter(function(q) { return q && q.text && Array.isArray(q.options) && q.options.length >= 2; });
+  } catch(e) {
+    Logger.log('題目解析失敗：' + e.message);
+  }
+
+  // 寫入 Bank
   var bankSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
   if (!bankSheet) throw new Error('Bank 分頁不存在，請先初始化資料庫');
   var ts = Date.now().toString().slice(-6);
@@ -568,13 +1103,32 @@ function _doGenerateBatch(nodesArray, grade, subject, batchIndex, pdfText, mode)
     var lv  = q.level || 'D';
     var nd  = batch.isGeneral ? ('通用練習(' + subject + grade + ')') : (q.node || batch.nodes[0]);
     var ans = String(q.answer || '').trim().toUpperCase().charAt(0) || 'A';
-    return ['AI-' + subject + '-' + ts + '-' + batchIndex + '-' + idx, nd, String(q.text || ''), q.type || 'single', JSON.stringify(q.options || []), ans, q.difficulty || 'easy', grade, subject, '[Level ' + lv + '] ' + (q.hint || '')];
+    return [
+      'AI-' + subject + '-' + ts + '-' + batchIndex + '-' + idx,
+      nd,
+      String(q.text || ''),
+      q.type || 'single',
+      JSON.stringify(q.options || []),
+      ans,
+      q.difficulty || 'easy',
+      grade,
+      subject,
+      '[Level ' + lv + '] ' + (q.hint || '')
+    ];
   });
+
   if (newRows.length > 0) {
     var lastRow = bankSheet.getLastRow() || 1;
     bankSheet.getRange(lastRow + 1, 1, newRows.length, 10).setValues(newRows);
   }
-  return { done: isLast, current: batchIndex + 1, total: total, addedThisBatch: newRows.length, message: '新增 ' + newRows.length + ' 題' };
+
+  return {
+    done: isLast,
+    current: batchIndex + 1,
+    total: total,
+    addedThisBatch: newRows.length,
+    message: '新增 ' + newRows.length + ' 題'
+  };
 }
 
 function generateBatch(nodesArray, grade, subject, batchIndex) {
@@ -599,264 +1153,3 @@ function generateBatchFromFolder(folderId, nodesArray, grade, subject, batchInde
 }
 
 function regenerateBatchForTask(taskName, batchIndex, mode, folderId) {
-  var tasks = getTasks();
-  var task  = null;
-  for (var i = 0; i < tasks.length; i++) {
-    if (tasks[i].taskName === taskName) { task = tasks[i]; break; }
-  }
-  if (!task) throw new Error('找不到任務：' + taskName);
-  var validNodes = (task.weakNodes || []).filter(_isValid);
-  var pdfText    = '';
-  if ((mode === 'pdf' || mode === 'mixed') && folderId) {
-    try {
-      var files = scanFolder(folderId);
-      var texts = [];
-      for (var j = 0; j < Math.min(files.length, 3); j++) {
-        var t = extractPdfText(files[j].id);
-        if (t) texts.push(t);
-      }
-      pdfText = texts.join('\n\n').substring(0, 8000);
-    } catch(e) { Logger.log('PDF 擷取失敗：' + e.message); }
-  }
-  return _doGenerateBatch(validNodes.length > 0 ? validNodes : ['通用基礎練習'], task.grade, task.subject, batchIndex, pdfText, mode || 'ai');
-}
-
-// ==========================================
-// 📝 測驗出題
-// ==========================================
-function generateQuiz(weakNode, taskName) {
-  var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-  if (!bank || bank.getLastRow() < 2) return [];
-  var bankRows = bank.getDataRange().getValues().slice(1).filter(function(r) { return r[0]; });
-  var subject = '';
-  if (taskName) {
-    var tSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tasks');
-    if (tSheet && tSheet.getLastRow() > 1) {
-      var tRows = tSheet.getDataRange().getValues();
-      for (var i = 1; i < tRows.length; i++) {
-        if (String(tRows[i][0]) === String(taskName)) { subject = String(tRows[i][2] || ''); break; }
-      }
-    }
-  }
-  var qCount  = parseInt(getConfig().QuizCount, 10) || 10;
-  var isValid = weakNode && _isValid(weakNode);
-  var pool = bankRows.filter(function(r) {
-    var nd = String(r[1] || '');
-    var matchNode = isValid ? (nd.indexOf(weakNode) >= 0 || weakNode.indexOf(nd) >= 0) : (nd.indexOf('通用練習') >= 0 || nd.indexOf('基礎練習') >= 0);
-    return matchNode && (!subject || String(r[8] || '') === subject) && r[2];
-  });
-  if (pool.length < qCount) {
-    var extra = bankRows.filter(function(r) { return r[2] && (!subject || String(r[8] || '') === subject) && pool.indexOf(r) < 0; });
-    pool = pool.concat(extra);
-  }
-  return pool.sort(function() { return Math.random() - 0.5; }).slice(0, qCount).map(function(r) {
-    return { id: r[0], node: String(r[1] || ''), text: String(r[2] || ''), type: String(r[3] || 'single'), options: _tryJSON(r[4], []), answer: String(r[5] || ''), difficulty: String(r[6] || 'easy'), grade: String(r[7] || ''), subject: String(r[8] || ''), hint: String(r[9] || ''), level: (String(r[9] || '').match(/\[Level ([ABCD])\]/) || [])[1] || 'D' };
-  });
-}
-
-// ==========================================
-// 📊 成績提交與查詢
-// ==========================================
-function submitQuizResult(payload) {
-  if (!payload) throw new Error('無作答資料');
-  var res = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Results');
-  if (!res) throw new Error('Results 分頁不存在，請先初始化資料庫');
-  res.appendRow([new Date().toLocaleString('zh-TW'), payload.taskName || '', payload.number || '', payload.name || '', payload.score !== undefined ? payload.score : '', payload.elapsed || 0, JSON.stringify(payload.details || [])]);
-  return { success: true, score: payload.score };
-}
-
-function getTaskResults(taskName) {
-  var res = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Results');
-  if (!res || res.getLastRow() < 2) return [];
-  return res.getDataRange().getValues().slice(1)
-    .filter(function(r) { return r[0] && String(r[1]) === String(taskName); })
-    .map(function(r) { return { time: String(r[0]), taskName: String(r[1]), number: String(r[2]), name: String(r[3]), score: Number(r[4]), elapsed: Number(r[5]), details: _tryJSON(r[6], []) }; });
-}
-
-function getQuestionErrorRates(taskName) {
-  var em = {};
-  getTaskResults(taskName).forEach(function(r) {
-    (r.details || []).forEach(function(d) {
-      var k = d.node || d.text || '未知';
-      if (!em[k]) em[k] = { node: d.node || '', total: 0, wrong: 0 };
-      em[k].total++;
-      if (!d.correct) em[k].wrong++;
-    });
-  });
-  return Object.keys(em).map(function(k) {
-    var v = em[k];
-    return { question: k, node: v.node, total: v.total, wrong: v.wrong, errorRate: v.total > 0 ? Math.round(v.wrong / v.total * 100) : 0 };
-  }).sort(function(a, b) { return b.errorRate - a.errorRate; });
-}
-
-function analyzeClassWeakNodes(taskName) {
-  var nm = {};
-  getTaskResults(taskName).forEach(function(r) {
-    (r.details || []).forEach(function(d) {
-      var nd = d.node || '未知';
-      if (!nm[nd]) nm[nd] = { total: 0, wrong: 0, byLevel: { A:0, B:0, C:0, D:0, AW:0, BW:0, CW:0, DW:0 } };
-      nm[nd].total++;
-      if (!d.correct) nm[nd].wrong++;
-      var lv = d.level || ((d.hint || '').match(/Level ([ABCD])/) || [])[1] || '';
-      if (lv && nm[nd].byLevel[lv] !== undefined) { nm[nd].byLevel[lv]++; if (!d.correct) nm[nd].byLevel[lv + 'W']++; }
-    });
-  });
-  return Object.keys(nm).map(function(nd) {
-    var v = nm[nd];
-    return { node: nd, total: v.total, wrong: v.wrong, errorRate: v.total > 0 ? Math.round(v.wrong / v.total * 100) : 0,
-      levelStats: ['A', 'B', 'C', 'D'].map(function(lv) {
-        return { level: lv, total: v.byLevel[lv] || 0, wrong: v.byLevel[lv + 'W'] || 0, errorRate: (v.byLevel[lv] || 0) > 0 ? Math.round((v.byLevel[lv + 'W'] || 0) / v.byLevel[lv] * 100) : null };
-      }).filter(function(l) { return l.total > 0; })
-    };
-  }).sort(function(a, b) { return b.errorRate - a.errorRate; }).slice(0, 10);
-}
-
-// ==========================================
-// 📄 學習單生成
-// ==========================================
-function generateTeachingWorksheet(topNodes, grade, subject) {
-  var cfg      = getConfig();
-  var isChinese = subject === '國語';
-  var tpl      = String(cfg[isChinese ? 'ChineseWorksheetPrompt' : 'MathWorksheetPrompt'] || '');
-  var nodeList = (topNodes || []).slice(0, 3).map(function(n, i) { return (i + 1) + '. ' + n; }).join('\n');
-  var prompt   = tpl.replace(/\{\{GRADE\}\}/g, grade || '').replace(/\{\{NODES\}\}/g, nodeList).replace(/\{\{PDF_CONTEXT\}\}/g, '');
-  var raw  = _callGemini(prompt, 4096, false);
-  var text = String(raw).trim().replace(/^```html\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/g, '').trim();
-  var firstTag = text.indexOf('<');
-  var lastTag  = text.lastIndexOf('>');
-  if (firstTag >= 0 && lastTag > firstTag) text = text.substring(firstTag, lastTag + 1).trim();
-  return text;
-}
-
-// ==========================================
-// 🔍 類似題與題庫查詢
-// ==========================================
-function getSimilarQuestions(node, grade, subject, limit) {
-  var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-  if (!bank || bank.getLastRow() < 2) return [];
-  return bank.getDataRange().getValues().slice(1)
-    .filter(function(r) {
-      var nd = String(r[1] || '');
-      return (nd.indexOf(node) >= 0 || node.indexOf(nd) >= 0) && (!grade || String(r[7] || '') === grade) && (!subject || String(r[8] || '') === subject) && r[2];
-    })
-    .map(function(r) { return { text: String(r[2] || ''), type: String(r[3] || 'single'), options: _tryJSON(r[4], []), answer: String(r[5] || ''), difficulty: String(r[6] || ''), hint: String(r[9] || '') }; })
-    .sort(function() { return Math.random() - 0.5; }).slice(0, limit || 3);
-}
-
-function getTaskQuestions(taskName) {
-  var tasks = getTasks();
-  var task  = null;
-  for (var i = 0; i < tasks.length; i++) { if (tasks[i].taskName === taskName) { task = tasks[i]; break; } }
-  if (!task) return { questions: [], total: 0 };
-  var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-  if (!bank || bank.getLastRow() < 2) return { questions: [], total: 0 };
-  var nodes = task.weakNodes || [];
-  var questions = bank.getDataRange().getValues().slice(1).filter(function(r) {
-    var matchSubject = !task.subject || String(r[8] || '') === task.subject;
-    var matchGrade   = !task.grade   || String(r[7] || '') === task.grade;
-    var matchNode    = nodes.length === 0 || nodes.some(function(n) { return String(r[1] || '').indexOf(n) >= 0 || n.indexOf(String(r[1] || '')) >= 0; });
-    return matchSubject && matchGrade && matchNode && r[2];
-  }).map(function(r) {
-    return { id: String(r[0] || ''), node: String(r[1] || ''), text: String(r[2] || ''), type: String(r[3] || 'single'), options: _tryJSON(r[4], []), answer: String(r[5] || ''), difficulty: String(r[6] || ''), level: (String(r[9] || '').match(/\[Level ([ABCD])\]/) || [])[1] || 'D', hint: String(r[9] || '').replace(/^\[Level [ABCD]\]\s*/, '') };
-  });
-  return { questions: questions, total: questions.length, grade: task.grade, subject: task.subject };
-}
-
-function getPracticeQuestionsForErrors(taskName) {
-  var results = getTaskResults(taskName);
-  if (!results.length) return [];
-  var tasks = getTasks();
-  var task  = null;
-  for (var i = 0; i < tasks.length; i++) { if (tasks[i].taskName === taskName) { task = tasks[i]; break; } }
-  var grade   = task ? task.grade   : '';
-  var subject = task ? task.subject : '';
-  var nm = {};
-  results.forEach(function(r) {
-    (r.details || []).forEach(function(d) {
-      if (!d.correct) {
-        var nd = d.node || '未知';
-        if (!nm[nd]) nm[nd] = { count: 0, wrongTexts: {} };
-        nm[nd].count++;
-        if (d.text) nm[nd].wrongTexts[d.text] = true;
-      }
-    });
-  });
-  if (!Object.keys(nm).length) return [];
-  var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-  if (!bank || bank.getLastRow() < 2) return [];
-  var bankRows = bank.getDataRange().getValues().slice(1);
-  return Object.keys(nm).sort(function(a, b) { return nm[b].count - nm[a].count; }).slice(0, 3).map(function(node) {
-    var data = nm[node];
-    var pool = bankRows.filter(function(r) {
-      var nd = String(r[1] || '');
-      return (nd.indexOf(node) >= 0 || node.indexOf(nd) >= 0) && (!subject || String(r[8] || '') === subject) && (!grade || String(r[7] || '') === grade) && !data.wrongTexts[String(r[2] || '')] && r[2];
-    });
-    var questions = pool.sort(function() { return Math.random() - 0.5; }).slice(0, 3).map(function(r) {
-      return { text: String(r[2] || ''), type: String(r[3] || 'single'), options: _tryJSON(r[4], []), answer: String(r[5] || ''), hint: String(r[9] || '').replace(/^\[Level [ABCD]\]\s*/, ''), level: (String(r[9] || '').match(/Level ([ABCD])/) || [])[1] || 'D' };
-    });
-    return { node: node, errorCount: data.count, questions: questions };
-  }).filter(function(item) { return item.questions.length > 0; });
-}
-
-// ==========================================
-// 🧹 題庫快取與清除
-// ==========================================
-function clearBankCache() {
-  try { CacheService.getScriptCache().remove('BankData_V3'); } catch(e) {}
-  return '✅ 題庫快取已清除';
-}
-
-function clearNodesFromBank(nodesArray, grade, subject) {
-  var nodes = (nodesArray || []).filter(_isValid);
-  if (!nodes.length) throw new Error('無效節點清單');
-  var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-  if (!bank) throw new Error('Bank 分頁不存在');
-  var rows    = bank.getDataRange().getValues();
-  var deleted = 0;
-  for (var i = rows.length - 1; i >= 1; i--) {
-    var nd = String(rows[i][1] || '');
-    var g  = String(rows[i][7] || '');
-    var s  = String(rows[i][8] || '');
-    var matchNode    = nodes.some(function(n) { return nd.indexOf(n) >= 0 || n.indexOf(nd) >= 0; });
-    if (matchNode && (!grade || g === grade) && (!subject || s === subject)) { bank.deleteRow(i + 1); deleted++; }
-  }
-  clearBankCache();
-  return '✅ 已清除 ' + deleted + ' 題';
-}
-
-// ==========================================
-// ☁️ 學習單雲端儲存
-// ==========================================
-function saveWorksheetToCloud(taskName, grade, subject, htmlContent) {
-  var safeTask = String(taskName).replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
-  var key      = 'WS_' + safeTask + '_' + String(grade || '') + '_' + String(subject || '');
-  var html     = String(htmlContent || '');
-  var CHUNK    = 8000;
-  var props    = PropertiesService.getScriptProperties();
-  var oldMetaStr = props.getProperty(key + '_meta');
-  if (oldMetaStr) {
-    var oldCount = parseInt(oldMetaStr, 10) || 1;
-    for (var i = 0; i < oldCount; i++) props.deleteProperty(key + '_' + i);
-  }
-  var chunks = [];
-  for (var j = 0; j < html.length; j += CHUNK) chunks.push(html.substring(j, j + CHUNK));
-  chunks.forEach(function(chunk, idx) { props.setProperty(key + '_' + idx, chunk); });
-  props.setProperty(key + '_meta', String(chunks.length));
-  return { saved: true, key: key, chunks: chunks.length };
-}
-
-function getWorksheetFromCloud(taskName, grade, subject) {
-  var safeTask = String(taskName).replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
-  var key      = 'WS_' + safeTask + '_' + String(grade || '') + '_' + String(subject || '');
-  var props    = PropertiesService.getScriptProperties();
-  var metaStr  = props.getProperty(key + '_meta');
-  if (!metaStr) return null;
-  var count = parseInt(metaStr, 10) || 1;
-  var html  = '';
-  for (var i = 0; i < count; i++) {
-    var chunk = props.getProperty(key + '_' + i);
-    if (chunk === null) return null;
-    html += chunk;
-  }
-  return { htmlContent: html };
-}
