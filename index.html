@@ -1,1155 +1,463 @@
-   💡 建議使用平板或桌上型電腦操作，以獲得最佳的程式碼編輯與下載體驗。
-    </div>
-
-    <!-- 頂部導航與進度條 -->
-    <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-xl md:text-2xl font-black flex items-center gap-2 tracking-wide">
-                車城國小｜網路程式設計輔助精靈
-            </h1>
-            
-            <div class="flex items-center gap-2 text-xs md:text-sm font-bold w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-                <div id="nav-1" class="px-3 py-1 bg-white text-slate-800 rounded-full flex-shrink-0">1. 帳號準備</div>
-                <div class="text-slate-400">➔</div>
-@@ -49,6 +49,7 @@ <h1 class="text-xl md:text-2xl font-black flex items-center gap-2 tracking-wide"
-
-    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
-
-        <!-- ==================== 步驟 1 ==================== -->
-        <div id="step-1" class="step-content active bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-blue-500">
-            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
-                <span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">1</span> 帳號與環境準備
-@@ -91,12 +92,14 @@ <h3 class="text-lg font-bold text-slate-700 mb-3 flex items-center gap-2">
-            </div>
-        </div>
-
-        <!-- ==================== 步驟 2：前端 ==================== -->
-        <div id="step-2" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-indigo-500">
-            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
-                <span class="bg-indigo-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">2</span> 網站門面 (前端與中介)
-            </h2>
-
-            <div class="space-y-8">
-                <!-- 選擇 index.html 範例 -->
-                <div>
-                    <h3 class="text-lg font-bold text-slate-700 mb-4">2-1 選擇 index.html 前端範例</h3>
-
-@@ -105,19 +108,21 @@ <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                            UI 範例選擇
-                        </h4>
-                        <!-- 選取前端時自動同步後端 -->
-                        <select id="frontendTemplateSelector" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium text-slate-700" onchange="syncBackendSelection();">
-                            <option value="system_logger">UI 範例一：資料傳送與系統參數抓取介面</option>
-                            <option value="ai_remedial">★ 專案範例：車城國小學力檢測AI補救系統</option>
-                            <option value="ai_remedial">★ 專案範例：車城國小學力檢測AI補救系統 (v13.2)</option>
-                            <option value="system_logger">UI 範例一：簡易測試資料回報介面</option>
-                        </select>
-                        <button onclick="confirmFrontendSelection(event)" class="mt-4 w-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-bold py-2.5 rounded-lg transition shadow-sm border border-indigo-200 flex justify-center items-center gap-2">
-                            ✅ 確認 UI 範例
-                        </button>
-                        <p class="text-xs text-slate-500 mt-3 leading-relaxed">
-                            確認後，後端 (GAS) 的範例將會自動與您的選擇對應，確保程式碼相容。
-                            確認後，後端 (GAS) 的範例將會自動與您的選擇對應，確保 API 完全相容。
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Cloudflare Worker -->
-                <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 relative">
-                    <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.33 10.22A5.5 5.5 0 008.67 9.04 4.5 4.5 0 004.5 17h14a3.5 3.5 0 00.83-6.78z"/></svg>
-@@ -129,7 +134,7 @@ <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
-                        <input type="checkbox" id="useCfWorker" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-blue-500" onchange="toggleWorkerInput()">
-                        <div>
-                            <div class="font-bold text-slate-800">啟用 Cloudflare Worker</div>
-                            <div class="text-sm text-slate-500 mt-1">勾選後，系統將於第四步額外產生一份 worker.js。</div>
-                            <div class="text-sm text-slate-500 mt-1">勾選後，系統將於第四步額外產生一份 worker.js 中繼檔。</div>
-                        </div>
-                    </label>
-                </div>
-@@ -141,6 +146,7 @@ <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
-            </div>
-        </div>
-
-        <!-- ==================== 步驟 3：後端 ==================== -->
-        <div id="step-3" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-emerald-500">
-            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
-                <span class="bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">3</span> 建造雲端大腦 (GAS 設定)
-@@ -151,20 +157,23 @@ <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-6 flex items-center
-                    <h3 class="text-lg font-bold text-slate-700 mb-4">3-1 後端參數與對應設定</h3>
-                    <div class="grid md:grid-cols-2 gap-5">
-
-                        <!-- 自動對應的 Code.gs -->
-                        <div class="p-5 rounded-xl border border-emerald-200 bg-emerald-50 flex flex-col justify-center shadow-sm">
-                            <h4 class="font-bold text-emerald-800 mb-3 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-                                已鎖定之後端 (Code.gs) 模組
-                            </h4>
-                            <!-- 設定為 disabled 唯讀狀態 -->
-                            <select id="backendTemplateSelector" class="w-full p-2.5 rounded-lg border border-slate-300 bg-slate-100 font-medium text-slate-500 cursor-not-allowed appearance-none" disabled>
-                                <option value="system_logger">核心模組：資料紀錄、使用次數與管理者設定</option>
-                                <option value="ai_remedial">★ 後端模組：車城國小學力檢測AI補救系統</option>
-                                <option value="ai_remedial">★ 後端模組：車城國小學力檢測AI補救系統 (v13.2)</option>
-                                <option value="system_logger">核心模組：簡易資料紀錄、使用次數與管理者設定</option>
-                            </select>
-                            <p class="text-xs text-emerald-600 mt-3 font-bold">
-                                系統已根據您在「前端 (UI)」的選擇，自動綁定對應的後端程式碼。
-                                系統已根據您在「前端 (UI)」的選擇，自動綁定了對應的後端程式碼。
-                            </p>
-                        </div>
-
-                        <!-- 建立雲端資料夾說明 (包含範例圖示) -->
-                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-center shadow-sm">
-                            <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
-@@ -190,19 +199,24 @@ <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
-            </div>
-        </div>
-
-        <!-- ==================== 步驟 4 ==================== -->
-        <div id="step-4" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 border-t-8 border-t-purple-500">
-            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center gap-3">
-                <span class="bg-purple-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">4</span> 程式碼產出中心
-            </h2>
-            <p class="text-slate-600 mb-6 text-sm">請於下方填寫對應的網址與 ID。填寫時，黑色框框內的程式碼會<strong class="text-purple-600">自動即時更新</strong>！</p>
-
-            <!-- 填空區 -->
-            <div class="bg-slate-50 p-6 rounded-xl mb-8 border border-slate-200 shadow-inner">
-                <div class="grid md:grid-cols-2 gap-5" id="input-fields-container">
-                    </div>
-                    <!-- 動態生成輸入框 -->
-                </div>
-            </div>
-
-            <!-- 程式碼顯示與下載區 -->
-            <div class="space-y-8">
-
-                <!-- Frontend HTML -->
-                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
-                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                        <div>
-@@ -216,20 +230,22 @@ <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center
-                    <textarea id="frontend-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-64 focus:outline-none focus:ring-2 focus:ring-indigo-500" wrap="off" spellcheck="false"></textarea>
-                </div>
-
-                <!-- Backend GAS -->
-                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
-                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
-                        <div>
-                            <span class="font-bold text-slate-800 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
-                                Code.gs (後端邏輯檔)
-                            </span>
-                            <p class="text-xs text-slate-500 mt-1">請將此程式碼貼入 Google Apps Script 專案中。</p>
-                            <p class="text-xs text-slate-500 mt-1">請將此完整程式碼貼入 Google Apps Script 專案中。</p>
-                        </div>
-                        <button onclick="downloadCode('backend-code', 'Code.gs')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載檔案</button>
-                    </div>
-                    <textarea id="backend-code" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-64 focus:outline-none focus:ring-2 focus:ring-emerald-500" wrap="off" spellcheck="false"></textarea>
-                </div>
-
-                <!-- CF Worker (Optional) -->
-                <div id="worker-panel" class="hidden border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
-                    <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
-                        <span class="font-bold text-slate-800 flex items-center gap-2">
-@@ -249,115 +265,17 @@ <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 flex items-center
-
-    </main>
-
-    <script>
-        // ==========================================
-        // UI 互動邏輯：步驟切換與表單連動
-        // ==========================================
-        function goToStep(step) {
-            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(`step-${step}`).classList.add('active');
-            
-            for(let i=1; i<=4; i++) {
-                const nav = document.getElementById(`nav-${i}`);
-                if(i === step) {
-                    nav.className = "px-3 py-1 bg-white text-slate-800 rounded-full shadow-sm font-bold flex-shrink-0";
-                } else if (i < step) {
-                    nav.className = "px-3 py-1 text-slate-300 font-bold cursor-pointer hover:text-white flex-shrink-0 transition";
-                    nav.setAttribute('onclick', `goToStep(${i})`);
-                } else {
-                    nav.className = "px-3 py-1 text-slate-300 opacity-50 flex-shrink-0";
-                    nav.removeAttribute('onclick');
-                }
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // 當前端下拉選單變更時，自動將後端 select 設為相同的值
-        function syncBackendSelection() {
-            const frontendSelect = document.getElementById('frontendTemplateSelector');
-            const backendSelect = document.getElementById('backendTemplateSelector');
-            if (frontendSelect && backendSelect) {
-                backendSelect.value = frontendSelect.value;
-            }
-        }
-
-        function confirmFrontendSelection(event) {
-            syncBackendSelection();
-            updateCodePreview();
-
-            const btn = event.currentTarget;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '✨ 已鎖定並同步後端！';
-            btn.classList.add('bg-indigo-500', 'text-white');
-            btn.classList.remove('bg-indigo-100', 'text-indigo-800');
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.classList.remove('bg-indigo-500', 'text-white');
-                btn.classList.add('bg-indigo-100', 'text-indigo-800');
-            }, 2000);
-        }
-    <footer class="bg-slate-800 text-slate-400 py-6 text-center mt-auto text-sm border-t border-slate-700">
-        <p class="tracking-wide">車城國小資訊教學專用 @ 網頁程式設計輔助精靈</p>
-    </footer>
-
-        function toggleWorkerInput() {
-            const useWorker = document.getElementById('useCfWorker').checked;
-            // 若在第4步改變勾選狀態，即時更新
-            if(document.getElementById('step-4').classList.contains('active')) {
-                generateCode();
-            }
-        }
-
-        function generateInputFields() {
-            const templateType = document.getElementById('frontendTemplateSelector').value;
-            const useWorker = document.getElementById('useCfWorker').checked;
-            const container = document.getElementById('input-fields-container');
-            container.innerHTML = '';
-    <!-- ======================================================================
-         📦 模板儲存區 (使用 script type="text/template" 避免跳脫字元錯誤) 
-         ====================================================================== -->
-
-            const createInput = (id, label, placeholder) => {
-                return `
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1.5">${label}</label>
-                    <input type="text" id="${id}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-slate-300 bg-white shadow-sm" placeholder="${placeholder}" oninput="updateCodePreview()">
-                </div>`;
-            };
-
-            let html = '';
-            
-            if (useWorker) {
-                html += createInput('input-gas', '⚙️ GAS WebApp 網址 (給 Worker 用的)', 'https://script.google.com/.../exec');
-                html += createInput('input-worker', '☁️ Worker 網址 (將覆寫至 index.html)', 'https://my-worker.xxxxx.workers.dev');
-            } else {
-                html += createInput('input-gas', '⚙️ GAS WebApp 網址 (將覆寫至 index.html)', 'https://script.google.com/.../exec');
-            }
-
-            // 根據不同專案，產生需要的變數填寫欄位
-            if (templateType === 'system_logger') {
-                html += createInput('input-admin-url', '🔗 管理者的網址連結', '請填入您的管理者專屬 GitHub 或網站網址');
-                html += createInput('input-folder-id', '📁 範例資料夾 ID', '請填入雲端硬碟的範例資料夾 ID');
-            } else if (templateType === 'ai_remedial') {
-                html += createInput('input-folder-id', '📁 存放結果的資料夾 ID', '請填入雲端硬碟資料夾 ID');
-                html += createInput('input-admin-url', '🔗 補救教學資源網址', '請填入您的資源站連結');
-            }
-
-            container.innerHTML = html;
-        }
-
-        // ==========================================
-        // 🛠️ 【管理者設定區】範例擴充與模板設定
-        // ==========================================
-        /*
-          老師您好：
-          若您未來在雲端硬碟建立新的範例（例如 .gs 與 .index 檔），
-          想要加入這個系統讓學生選擇，請依照以下步驟：
-          
-          1. 複製下方 `ai_remedial` 的格式，新增一組 key (例如 'new_project')。
-          2. 將您的 `.index` 內容貼入 `html:` 的反引號 (\`) 中。
-          3. 將您的 `.gs` 內容貼入 `gas:` 的反引號 (\`) 中。
-          4. 記得在 HTML 代碼上方，分別於 `frontendTemplateSelector` 與 `backendTemplateSelector` 中，
-             新增 `<option value="new_project">您的專案名稱</option>`。
-        */
-
-        const codeTemplates = {
-            'system_logger': {
-                html: `<!DOCTYPE html>
-    <!-- 【範例一】簡易資料紀錄 (System Logger) 前端 -->
-    <script type="text/template" id="tpl-sys-html">
-<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>系統資料回報與設定抓取</title></head>
-<body>
-@@ -399,8 +317,12 @@ <h3>📥 獲取系統設定</h3>
-        }
-    <\/script>
-</body>
-</html>`,
-                gas: `const SHEET_NAME = '系統使用與資料紀錄表';
-</html>
-    </script>
-
-    <!-- 【範例一】簡易資料紀錄 (System Logger) 後端 -->
-    <script type="text/template" id="tpl-sys-gas">
-const SHEET_NAME = '系統使用與資料紀錄表';
-const ADMIN_URL = '{{ADMIN_URL}}'; 
-const FOLDER_ID = '{{FOLDER_ID}}';
-
-@@ -424,91 +346,1196 @@ <h3>📥 獲取系統設定</h3>
-    if (callback) return ContentService.createTextOutput(callback + "(" + JSON.stringify(responseData) + ")").setMimeType(ContentService.MimeType.JAVASCRIPT);
-    return ContentService.createTextOutput(JSON.stringify(responseData)).setMimeType(ContentService.MimeType.JSON);
-}
-function doOptions() { return ContentService.createTextOutput(""); }`
-            },
-            
-            // 💡 管理者自訂範例區：車城國小學力檢測AI補救系統
-            'ai_remedial': {
-                html: `<!DOCTYPE html>
-function doOptions() { return ContentService.createTextOutput(""); }
-    </script>
-
-    <!-- 【範例二】車城國小學力檢測AI補救系統 前端 -->
-    <script type="text/template" id="tpl-ai-html">
-<!-- 
-  老師請注意：因為您的 .index 檔案高達 55KB，
-  這裡先放入您的前端 API 網址設定。
-  下載後，請將您原本 55KB 的前端程式碼內容，直接貼進這份檔案取代此段註解即可！
--->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <title>車城國小學力檢測AI補救系統</title>
-    <title>車城國小學力檢測AI補救系統 (前端載入提示)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>車城國小｜網路程式設計輔助精靈</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .step-content { display: none; }
+  .step-content.active { display: block; }
+  .code-box { font-family: 'Courier New', Courier, monospace; resize: vertical; }
+  .card-selected { outline: 3px solid #6366f1; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+</style>
 </head>
-<body>
-    <h1>🎯 學力檢測與補救教學中心</h1>
-    <p>這是一個示範讀取雲端硬碟教學檔案，並回傳測驗結果的系統模組。</p>
-    
-    <div>
-        <label>輸入學生學號：</label>
-        <input type="text" id="studentId">
-        <button onclick="getRemedialData()">讀取補救資源</button>
+<body class="bg-slate-100 min-h-screen flex flex-col">
+
+<!-- ===== 頂部導航 ===== -->
+<header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-3">
+    <h1 class="text-xl font-black tracking-wide">車城國小｜網路程式設計輔助精靈</h1>
+    <div id="nav-bar" class="flex items-center gap-2 text-xs font-bold overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+      <!-- 由 JS 動態產生 -->
     </div>
-    
-    <div id="resultBox" style="margin-top:20px; padding:10px; background:#f0f0f0;"></div>
+  </div>
+</header>
 
-    <h1>車城國小學力檢測AI補救系統</h1>
-    <p style="color:red; font-weight:bold;">
-      ※ 請用文字編輯器開啟這份下載的 index.html 檔案，將您 55KB 的完整前端程式碼貼在這邊覆蓋掉我。
-    </p>
-    <script>
-        // 這是系統自動為您填入的連線網址，請複製此行到您原本的程式碼中替換掉舊的 API_URL
-        const API_URL = '{{API_URL_TARGET}}';
-        
-        function getRemedialData() {
-            const sid = document.getElementById('studentId').value;
-            const box = document.getElementById('resultBox');
-            box.innerText = "資源讀取中...";
-            
-            // 呼叫 GAS 取得對應的雲端硬碟補救教學連結 (GET JSONP)
-            const script = document.createElement('script');
-            const callbackName = 'ai_cb_' + Math.round(100000 * Math.random());
-            
-            window[callbackName] = function(data) {
-                box.innerHTML = 
-                    "<strong>為學號 " + sid + " 安排的資源：</strong><br>" + 
-                    "📁 資源資料夾 ID: " + data.folderId + "<br>" +
-                    "🔗 線上學習站: <a href='" + data.adminUrl + "' target='_blank'>點此進入</a>";
-            };
-            script.src = API_URL + "?action=getMaterial&callback=" + callbackName;
-            document.body.appendChild(script);
-        }
-    <\/script>
-</body>
-</html>`,
-                gas: `/**
- * 車城國小學力檢測AI補救系統 - GAS 後端模組
- * 負責連接學力檢測資料庫，並提供對應的雲端硬碟檔案連結。
- */
-</html>
-    </script>
+<main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
 
-    <!-- 【範例二】車城國小學力檢測AI補救系統 後端 (完整載入 v13.2 包含連線檢測與自動填寫 ID) -->
-    <script type="text/template" id="tpl-ai-gas">
+  <!-- ===== 步驟 1：帳號準備 ===== -->
+  <div id="step-1" class="step-content active bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-t-8 border-blue-500">
+    <h2 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+      <span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center">1</span>
+      帳號與環境準備
+    </h2>
+    <div class="space-y-4 text-slate-700 leading-relaxed">
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-5">
+        <h3 class="font-bold text-blue-800 mb-3">✅ 開始前請確認</h3>
+        <ul class="space-y-2 text-sm">
+          <li>📧 已有 Google 帳號並登入</li>
+          <li>💻 建議使用桌機或平板操作</li>
+          <li>📁 已在 Google 雲端硬碟建立一個專案資料夾</li>
+        </ul>
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-5">
+        <h3 class="font-bold text-amber-800 mb-2">💡 本精靈的用途</h3>
+        <p class="text-sm">幫助你從老師提供的範例中，<strong>快速產出屬於自己的網站程式碼</strong>，並填入你的 GAS 網址與資料夾 ID。</p>
+      </div>
+    </div>
+    <button onclick="goToStep(2)" class="mt-8 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition">
+      我準備好了，開始 →
+    </button>
+  </div>
+
+  <!-- ===== 步驟 2：選擇範例 ===== -->
+  <div id="step-2" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-t-8 border-indigo-500">
+    <h2 class="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
+      <span class="bg-indigo-500 text-white w-10 h-10 rounded-full flex items-center justify-center">2</span>
+      選擇範例
+    </h2>
+    <p class="text-slate-500 text-sm mb-6">請選擇老師提供的範例，精靈會自動載入對應的程式碼。</p>
+
+    <!-- 載入中 -->
+    <div id="template-loading" class="text-center py-12 text-slate-400">
+      <div class="text-4xl mb-3">⏳</div>
+      <p class="font-bold">正在從雲端讀取範例清單⋯⋯</p>
+    </div>
+
+    <!-- 錯誤訊息 -->
+    <div id="template-error" class="hidden bg-red-50 border border-red-200 rounded-xl p-5 text-red-700 text-sm">
+      <p class="font-bold mb-1">❌ 無法讀取範例清單</p>
+      <p id="template-error-msg"></p>
+      <button onclick="loadTemplateList()" class="mt-3 bg-red-100 hover:bg-red-200 text-red-800 font-bold px-4 py-2 rounded-lg text-xs transition">重試</button>
+    </div>
+
+    <!-- 範例卡片列表 -->
+    <div id="template-list" class="hidden grid gap-4 md:grid-cols-2"></div>
+
+    <!-- Cloudflare Worker 選項 -->
+    <div id="worker-option" class="hidden mt-6 bg-blue-50 border border-blue-200 rounded-xl p-5">
+      <label class="flex items-start gap-3 cursor-pointer">
+        <input type="checkbox" id="useCfWorker" class="mt-1 w-5 h-5 text-blue-600 rounded" onchange="onWorkerToggle()">
+        <div>
+          <div class="font-bold text-slate-800">啟用 Cloudflare Worker 中繼</div>
+          <div class="text-sm text-slate-500 mt-1">勾選後會在第四步額外產生一份 worker.js 中繼檔</div>
+        </div>
+      </label>
+    </div>
+
+    <div class="flex gap-3 mt-8">
+      <button onclick="goToStep(1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition">← 上一步</button>
+      <button id="btn-step2-next" onclick="confirmTemplateSelection()" class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl transition opacity-50 cursor-not-allowed" disabled>
+        確認範例，前往填空 →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== 步驟 3：GAS 設定說明 ===== -->
+  <div id="step-3" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-t-8 border-emerald-500">
+    <h2 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+      <span class="bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center">3</span>
+      建立雲端大腦（GAS 設定）
+    </h2>
+    <div class="space-y-5">
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+        <h3 class="font-bold text-emerald-800 mb-3">📋 操作步驟</h3>
+        <ol class="space-y-2 text-sm text-slate-700 list-decimal list-inside">
+          <li>前往 <a href="https://script.google.com" target="_blank" class="text-blue-600 underline">Google Apps Script</a> 建立新專案</li>
+          <li>將老師提供的 Code.gs 內容貼入專案</li>
+          <li>點選「部署 > 新增部署」，類型選「網頁應用程式」</li>
+          <li>執行身分：<strong>以我的 Google 帳戶執行</strong></li>
+          <li>存取權：<strong>任何人（含匿名）</strong></li>
+          <li>複製部署後的 <strong>WebApp 網址</strong></li>
+        </ol>
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm">
+        <p class="font-bold text-amber-800 mb-1">⚠️ 注意事項</p>
+        <p class="text-slate-700">每次修改程式碼後，都要重新部署並選擇「建立新版本」，否則異動不會生效。</p>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-8">
+      <button onclick="goToStep(2)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition">← 上一步</button>
+      <button onclick="goToStep(4)" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition">我已完成，前往填空 →</button>
+    </div>
+  </div>
+
+  <!-- ===== 步驟 4：程式碼產出 ===== -->
+  <div id="step-4" class="step-content bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-t-8 border-purple-500">
+    <h2 class="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
+      <span class="bg-purple-500 text-white w-10 h-10 rounded-full flex items-center justify-center">4</span>
+      填空與下載
+    </h2>
+    <p class="text-slate-500 text-sm mb-6">填入你的網址與 ID，程式碼會<strong class="text-purple-600">即時自動更新</strong>！</p>
+
+    <!-- 動態填空區 -->
+    <div class="bg-slate-50 p-6 rounded-xl mb-6 border border-slate-200">
+      <div id="input-fields" class="grid md:grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- 程式碼區塊：前端 -->
+    <div class="border border-slate-300 rounded-xl overflow-hidden mb-5 shadow-sm">
+      <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+        <div>
+          <span class="font-bold text-slate-800">index.html（前端）</span>
+          <p class="text-xs text-slate-500 mt-0.5">上傳至 GitHub 或放到你的網站空間</p>
+        </div>
+        <button onclick="downloadCode('code-html', 'index.html')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載</button>
+      </div>
+      <textarea id="code-html" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-56 focus:outline-none" wrap="off" spellcheck="false"></textarea>
+    </div>
+
+    <!-- 程式碼區塊：後端 -->
+    <div class="border border-slate-300 rounded-xl overflow-hidden mb-5 shadow-sm">
+      <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+        <div>
+          <span class="font-bold text-slate-800">Code.gs（後端 GAS）</span>
+          <p class="text-xs text-slate-500 mt-0.5">貼入 Google Apps Script 專案後部署</p>
+        </div>
+        <button onclick="downloadCode('code-gas', 'Code.gs')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載</button>
+      </div>
+      <textarea id="code-gas" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-56 focus:outline-none" wrap="off" spellcheck="false"></textarea>
+    </div>
+
+    <!-- 程式碼區塊：Worker（選用） -->
+    <div id="worker-panel" class="hidden border border-slate-300 rounded-xl overflow-hidden mb-5 shadow-sm">
+      <div class="bg-slate-100 border-b border-slate-300 p-3 flex justify-between items-center">
+        <div>
+          <span class="font-bold text-slate-800">worker.js（Cloudflare Worker）</span>
+          <p class="text-xs text-slate-500 mt-0.5">貼入 Cloudflare Workers 後部署</p>
+        </div>
+        <button onclick="downloadCode('code-worker', 'worker.js')" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-4 py-1.5 rounded shadow transition">📥 下載</button>
+      </div>
+      <textarea id="code-worker" class="w-full bg-[#1e293b] p-4 text-slate-300 text-sm code-box h-40 focus:outline-none" wrap="off" spellcheck="false"></textarea>
+    </div>
+
+    <button onclick="goToStep(3)" class="mt-2 w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition">← 上一步</button>
+  </div>
+
+</main>
+
+<footer class="bg-slate-800 text-slate-400 py-5 text-center text-sm border-t border-slate-700">
+  車城國小資訊教學專用 @ 網頁程式設計輔助精靈
+</footer>
+
+<script>
 // ============================================================
-// 車城國小學力檢測AI補救系統 - Google Apps Script 後端 v13.2
-// 搭配前端 v13.2
+// ⚙️ 設定區：老師部署 GAS 後，請將 WebApp 網址填在這裡
+// ============================================================
+const ADMIN_API_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
 // ============================================================
 
-// 系統參數
-const REMEDIAL_FOLDER_ID = '{{FOLDER_ID}}';
-const SYSTEM_URL = '{{ADMIN_URL}}';
-// ==========================================
-// 🟢 測試專用函數
-// ==========================================
-function testBackend() {
-  Logger.log("✅ 後端基礎語法無誤！v13.2");
-  try {
-    SpreadsheetApp.getUi().alert("✅ 後端 v13.2 語法正常！\n\n請點擊「部署 > 管理部署作業 > 編輯 > 建立新版本」後再複製新網址到前端。\n\n注意：請勿手動執行 doGet 或 doPost。");
-  } catch(e) {}
-}
+// 全域狀態
+let templateList = [];
+let selectedTemplate = null;
+let templateContent = { html: '', gas: '', worker: '' };
 
-function testGeminiAPI() {
-  try {
-    const result = _callGemini('請用繁體中文說一句話', 100, false);
-    Logger.log('✅ Gemini 回應：' + result);
-    SpreadsheetApp.getUi().alert('✅ Gemini API 正常！\n\n回應：' + result);
-  } catch(e) {
-    Logger.log('❌ Gemini 失敗：' + e.message);
-    SpreadsheetApp.getUi().alert('❌ Gemini API 失敗：\n' + e.message + '\n\n請確認 Config 試算表中的 GeminiAPIKey 是否正確。');
-  }
-}
+// ============================================================
+// 步驟切換
+// ============================================================
+const STEP_LABELS = ['帳號準備', '選擇範例', 'GAS 設定', '填空下載'];
 
-// ==========================================
-// 🌐 請求接收區（CORS + JSONP 雙模式）
-// ==========================================
-function doOptions(e) {
-  return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
-}
-
-function doGet(e) {
-    // 預防跨域阻擋，使用 JSONP 封裝回傳內容
-    const responseData = {
-        status: 'success',
-        folderId: REMEDIAL_FOLDER_ID,
-        adminUrl: SYSTEM_URL,
-        message: '學力檢測資源已成功派發'
-    };
-    
-    const callback = e.parameter.callback;
-    if (callback) {
-        return ContentService.createTextOutput(callback + "(" + JSON.stringify(responseData) + ")")
-                             .setMimeType(ContentService.MimeType.JAVASCRIPT);
-  if (!e) {
-    return ContentService.createTextOutput("⚠️ 這是車城國小學力檢測 API 後端 v13.2。請透過網頁前端呼叫。請勿在編輯器中手動執行。");
-  }
-
-  try {
-    var raw = e.parameter.payload || '{}';
-    var payload = JSON.parse(raw);
-    var action = payload.action || 'ping';
-    var data = payload.data || {};
-    var callback = e.parameter.callback || '';
-
-    var result = (action === 'ping') ? 'API v13.2 運作中' : handleAction(action, data);
-    var responseJson = JSON.stringify({ status: 'success', data: result });
-
-    // 若前端要求 JSONP（有 callback 參數）
-    if (callback && callback !== '_noop' && /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(callback)) {
-      return ContentService
-        .createTextOutput(callback + '(' + responseJson + ')')
-        .setMimeType(ContentService.MimeType.JAVASCRIPT);
-    }
-
-    return ContentService
-      .createTextOutput(responseJson)
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch (err) {
-    Logger.log('[doGet Error] ' + err.message + '\n' + err.stack);
-    var errJson = JSON.stringify({ status: 'error', message: err.message });
-    var cb = (e && e.parameter && e.parameter.callback) || '';
-    if (cb && cb !== '_noop' && /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(cb)) {
-      return ContentService.createTextOutput(cb + '(' + errJson + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
-    }
-    return ContentService.createTextOutput(JSON.stringify(responseData))
-                         .setMimeType(ContentService.MimeType.JSON);
-    return ContentService.createTextOutput(errJson).setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doPost(e) {
-    // 預留學生提交測驗成績的接收口
-    return ContentService.createTextOutput(JSON.stringify({status: 'ok'}))
-                         .setMimeType(ContentService.MimeType.JSON);
-  if (!e) {
-    return ContentService.createTextOutput("⚠️ 錯誤：這是一個 API 端點，必須由網頁前端發送 POST 請求來觸發。請勿在編輯器中手動執行。");
-  }
-
-  try {
-    var raw = '';
-
-    // 優先讀取 text/plain 直接傳送的 JSON（前端大資料模式）
-    if (e.postData && e.postData.contents) {
-      var contents = e.postData.contents;
-      if (contents.startsWith('{') || contents.startsWith('[')) {
-        raw = contents;
-      } else if (contents.startsWith('payload=')) {
-        raw = decodeURIComponent(contents.substring(8));
-      } else {
-        raw = contents;
-      }
-    } else if (e.parameter && e.parameter.payload) {
-      raw = e.parameter.payload;
+function renderNav(currentStep) {
+  const bar = document.getElementById('nav-bar');
+  bar.innerHTML = STEP_LABELS.map((label, i) => {
+    const step = i + 1;
+    const isActive = step === currentStep;
+    const isPast   = step < currentStep;
+    if (isActive) {
+      return `<div class="px-3 py-1 bg-white text-slate-800 rounded-full font-bold flex-shrink-0">${step}. ${label}</div>`;
+    } else if (isPast) {
+      return `<div class="px-3 py-1 text-slate-300 font-bold cursor-pointer hover:text-white flex-shrink-0 transition" onclick="goToStep(${step})">${step}. ${label}</div>`;
     } else {
-      raw = '{}';
+      return `<div class="px-3 py-1 text-slate-500 opacity-50 flex-shrink-0">${step}. ${label}</div>`;
     }
-
-    var payload = JSON.parse(raw);
-    var action = payload.action;
-    var data = payload.data || {};
-
-    var result = handleAction(action, data);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'success', data: result }))
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch (err) {
-    Logger.log('[doPost Error] ' + err.message + '\n' + err.stack);
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
+  }).join('<div class="text-slate-500">➔</div>');
 }
 
-// ==========================================
-// 🚦 核心路由
-// ==========================================
-function handleAction(action, data) {
-  switch (action) {
-    case 'ping':                          return 'API v13.2 運作中';
-    case 'getTasks':                      return getTasks();
-    case 'getStudents':                   return getStudents(data.taskName);
-    case 'verifyAdmin':                   return verifyAdmin(data.pwd);
-    case 'getQuizSettings':               return getQuizSettings();
-    case 'updateQuizSettings':            return updateQuizSettings(data.count);
-    case 'updateFolderId':                return updateFolderId(data.folderId);
-    case 'getFolderId':                   return getFolderId();
-    case 'getSystemPrompts':              return getSystemPrompts();
-    case 'updateSystemPrompts':           return updateSystemPrompts(data.mathPrompt, data.chinesePrompt, data.mathWorksheetPrompt, data.chineseWorksheetPrompt, data.pwd);
-    case 'setupDatabase':                 return setupDatabase();
-    case 'clearBankCache':                return clearBankCache();
-    case 'clearNodesFromBank':            return clearNodesFromBank(data.nodesArray, data.grade, data.subject);
-    case 'uploadTaskData':                return uploadTaskData(data.taskName, data.grade, data.subject, data.studentData, data.uniqueNodes);
-    case 'generateBatch':                 return generateBatch(data.nodesArray, data.grade, data.subject, data.batchIndex);
-    case 'generateBatchFromFolder':       return generateBatchFromFolder(data.folderId, data.nodesArray, data.grade, data.subject, data.batchIndex, data.mode);
-    case 'regenerateBatchForTask':        return regenerateBatchForTask(data.taskName, data.batchIndex, data.mode, data.folderId);
-    case 'scanFolder':                    return scanFolder(data.folderId);
-    case 'generateQuiz':                  return generateQuiz(data.weakNode, data.taskName);
-    case 'submitQuizResult':              return submitQuizResult(data.payload);
-    case 'getTaskResults':                return getTaskResults(data.taskName);
-    case 'getQuestionErrorRates':         return getQuestionErrorRates(data.taskName);
-    case 'analyzeClassWeakNodes':         return analyzeClassWeakNodes(data.taskName);
-    case 'generateTeachingWorksheet':     return generateTeachingWorksheet(data.topNodes, data.grade, data.subject);
-    case 'getSimilarQuestions':           return getSimilarQuestions(data.node, data.grade, data.subject, data.limit);
-    case 'getTaskQuestions':              return getTaskQuestions(data.taskName);
-    case 'getPracticeQuestionsForErrors': return getPracticeQuestionsForErrors(data.taskName);
-    case 'getGeminiSettings':             return getGeminiSettings();
-    case 'updateGeminiSettings':          return updateGeminiSettings(data.model, data.isPaid, data.pwd);
-    case 'getHelpUrl':                    return getHelpUrl();
-    case 'updateHelpUrl':                 return updateHelpUrl(data.url, data.pwd);
-    case 'saveWorksheetToCloud':          return saveWorksheetToCloud(data.taskName, data.grade, data.subject, data.htmlContent);
-    case 'getWorksheetFromCloud':         return getWorksheetFromCloud(data.taskName, data.grade, data.subject);
-    default: throw new Error('未知的 API 請求：' + action);
-  }
+function goToStep(step) {
+  document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  renderNav(step);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (step === 2 && templateList.length === 0) loadTemplateList();
+  if (step === 4) renderInputFields();
 }
 
-function doOptions() { return ContentService.createTextOutput(""); }`
-// ==========================================
-// 🗄️ 資料庫初始化
-// ==========================================
-function setupDatabase() {
-  var ss  = SpreadsheetApp.getActiveSpreadsheet();
-  var log = [];
+// ============================================================
+// 步驟 2：從 GAS API 讀取範例清單
+// ============================================================
+function loadTemplateList() {
+  document.getElementById('template-loading').classList.remove('hidden');
+  document.getElementById('template-error').classList.add('hidden');
+  document.getElementById('template-list').classList.add('hidden');
 
-  // Config 分頁
-  var cfg = ss.getSheetByName('Config');
-  if (!cfg) {
-    cfg = ss.insertSheet('Config');
-    cfg.appendRow(['Key', 'Value']);
-    cfg.appendRow(['AdminPassword', '1234']);
-    cfg.appendRow(['GeminiAPIKey', '請在此貼上您的 Gemini API 金鑰']);
-    cfg.appendRow(['QuizCount', '10']);
-    log.push('✅ Config 分頁已建立');
-  }
+  const cbName = '_cb_' + Date.now();
+  const script = document.createElement('script');
+  const timeout = setTimeout(() => {
+    showTemplateError('連線逾時，請確認網路或 GAS 網址是否正確');
+    document.body.removeChild(script);
+  }, 12000);
 
-  var rows = cfg.getDataRange().getValues();
-  var existKeys = rows.map(function(r) { return String(r[0]); });
+  window[cbName] = function(resp) {
+    clearTimeout(timeout);
+    try { document.body.removeChild(script); } catch(e) {}
+    delete window[cbName];
 
-  function addIfMissing(key, val, desc) {
-    if (existKeys.indexOf(key) < 0) {
-      cfg.appendRow([key, val]);
-      existKeys.push(key);
-      log.push('✅ 補充 ' + desc);
-    }
-  }
-
-  // 自動綁定懶人包傳入的變數
-  addIfMissing('PdfFolderId', '{{FOLDER_ID}}', 'PDF資料夾ID');
-  addIfMissing('HelpUrl', '{{ADMIN_URL}}', '操作說明網址');
-  addIfMissing('GeminiModel', 'gemma-4-31b-it', 'GeminiModel');
-  addIfMissing('IsPaidAccount', 'false', 'IsPaidAccount');
-  addIfMissing('MathPrompt',
-    '【角色設定】\n你是台灣頂尖的國小數學科教學與評量專家。\n' +
-    '【任務背景】\n請針對「{{GRADE}}」學生，為以下每個知識節點各出 {{QCOUNT}} 題測驗題：\n' +
-    '【知識節點清單】：\n{{NODES}}\n{{PDF_CONTEXT}}\n' +
-    '【出題架構】：\n- Level D（基礎題）\n- Level C（拆解題）\n- Level B（變數題）\n- Level A（應用題）\n' +
-    '只輸出 JSON 陣列，格式如下（不要有其他文字）：\n' +
-    '[{"node":"節點名稱","level":"D","text":"題目內容","type":"single","options":["選項A","選項B","選項C","選項D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]',
-    '數學出題 Prompt');
-  addIfMissing('ChinesePrompt',
-    '【角色設定】\n你是台灣首屈一指的國小國語文閱讀與評量專家。\n' +
-    '【任務背景】\n請針對「{{GRADE}}」學生，為以下每個知識節點各出 {{QCOUNT}} 題層次化閱讀測驗：\n' +
-    '【知識節點清單】：\n{{NODES}}\n{{PDF_CONTEXT}}\n' +
-    '請先創作一段短文（50-100字），再依據短文出 Level C、B、A 題目。\n' +
-    '只輸出 JSON 陣列（不要有其他文字）：\n' +
-    '[{"node":"節點名稱","level":"C","text":"題目內容","type":"single","options":["選項A","選項B","選項C","選項D"],"answer":"A","difficulty":"medium","hint":"解題提示"}]',
-    '國語出題 Prompt');
-  addIfMissing('MathWorksheetPrompt',
-    '請為「{{GRADE}}」學生設計一份 A4 補救學習單（完整 HTML 格式）。\n' +
-    '弱點節點：\n{{NODES}}\n\n' +
-    '要求：\n1. 包含概念說明、例題、練習題（Level C/B/A 各2題）、解答欄\n' +
-    '2. 使用 CSS 讓版面美觀，適合列印\n3. 輸出完整 HTML（包含 <!DOCTYPE html>）',
-    '數學學習單 Prompt');
-  addIfMissing('ChineseWorksheetPrompt',
-    '請為「{{GRADE}}」學生設計一份 A4 補救學習單（完整 HTML 格式）。\n' +
-    '弱點節點：\n{{NODES}}\n\n' +
-    '要求：\n1. 包含閱讀文本、字詞練習、閱讀理解題（Level C/B/A 各2題）、解答欄\n' +
-    '2. 使用 CSS 讓版面美觀，適合列印\n3. 輸出完整 HTML（包含 <!DOCTYPE html>）',
-    '國語學習單 Prompt');
-
-  // 各資料分頁
-  var sheetDefs = {
-    'Bank':    ['ID', '知識節點', '題目', '類型', '選項(JSON)', '正解', '難度', '適用年級', '科目', '解析'],
-    'Tasks':   ['任務名稱', '適用年級', '科目', '建立時間', '學生人數', '弱點節點(JSON)'],
-    'Students':['任務名稱', '座號', '姓名', '弱點節點(JSON)'],
-    'History': ['上傳時間', '任務名稱', '適用年級', '科目', '學生人數', '班級弱點節點'],
-    'Results': ['測驗時間', '任務名稱', '座號', '姓名', '分數', '作答歷時(秒)', '作答明細(JSON)']
-  };
-
-  Object.keys(sheetDefs).forEach(function(name) {
-    if (!ss.getSheetByName(name)) {
-      var sh = ss.insertSheet(name);
-      sh.appendRow(sheetDefs[name]);
-      log.push('✅ ' + name + ' 分頁已建立');
-    }
-  });
-
-  try { CacheService.getScriptCache().remove('BankData_V3'); } catch(e) {}
-  return '✅ 資料庫初始化完成！\n' + log.join('\n');
-}
-
-// ==========================================
-// ⚙️ Config 基礎操作
-// ==========================================
-function getConfig() {
-  var cfg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config');
-  if (!cfg) return {};
-  var out = {};
-  cfg.getDataRange().getValues().forEach(function(r) {
-    if (r[0]) out[String(r[0])] = r[1];
-  });
-  return out;
-}
-
-function _updateConfigValue(sheet, key, value) {
-  var rows = sheet.getDataRange().getValues();
-  for (var i = 1; i < rows.length; i++) {
-    if (String(rows[i][0]) === String(key)) {
-      sheet.getRange(i + 1, 2).setValue(value);
+    if (resp.status !== 'success') {
+      showTemplateError(resp.message || '未知錯誤');
       return;
     }
-  }
-  sheet.appendRow([key, value]);
-}
-
-function verifyAdmin(pwd) {
-  var cfg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config');
-  if (!cfg) return false;
-  var rows = cfg.getDataRange().getValues().slice(1);
-  for (var i = 0; i < rows.length; i++) {
-    if (String(rows[i][0]) === 'AdminPassword' && String(rows[i][1]) === String(pwd)) return true;
-  }
-  return false;
-}
-
-function getQuizSettings() {
-  return { quizCount: parseInt(getConfig().QuizCount, 10) || 10 };
-}
-function updateQuizSettings(n) {
-  var v = parseInt(n, 10);
-  if (isNaN(v) || v < 1) throw new Error('請輸入有效數字');
-  _updateConfigValue(SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config'), 'QuizCount', v);
-  return '✅ 題數已更新為 ' + v + ' 題';
-}
-function updateFolderId(id) {
-  var s = String(id || '').split('?')[0].trim();
-  _updateConfigValue(SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config'), 'PdfFolderId', s);
-  return '✅ 資料夾 ID 已儲存';
-}
-function getFolderId() {
-  var id = String(getConfig().PdfFolderId || '').split('?')[0].trim();
-  return (id && !id.startsWith('（') && id.length > 5) ? id : '';
-}
-function getSystemPrompts() {
-  var c = getConfig();
-  return {
-    mathPrompt: String(c.MathPrompt || ''),
-    chinesePrompt: String(c.ChinesePrompt || ''),
-    mathWorksheetPrompt: String(c.MathWorksheetPrompt || ''),
-    chineseWorksheetPrompt: String(c.ChineseWorksheetPrompt || '')
+    templateList = resp.data || [];
+    renderTemplateCards();
   };
-}
-function updateSystemPrompts(mathP, chineseP, mathWS, chineseWS, pwd) {
-  if (!verifyAdmin(pwd)) throw new Error('密碼錯誤！');
-  var c = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config');
-  if (mathP !== undefined)    _updateConfigValue(c, 'MathPrompt', mathP || '');
-  if (chineseP !== undefined) _updateConfigValue(c, 'ChinesePrompt', chineseP || '');
-  if (mathWS !== undefined)   _updateConfigValue(c, 'MathWorksheetPrompt', mathWS || '');
-  if (chineseWS !== undefined)_updateConfigValue(c, 'ChineseWorksheetPrompt', chineseWS || '');
-  return '✅ 提示詞已更新！';
-}
-function getGeminiSettings() {
-  var c = getConfig();
-  return {
-    model: String(c.GeminiModel || 'gemma-4-31b-it'),
-    isPaid: String(c.IsPaidAccount || 'false').toLowerCase() === 'true'
+
+  script.onerror = function() {
+    clearTimeout(timeout);
+    delete window[cbName];
+    showTemplateError('無法載入腳本，請確認 ADMIN_API_URL 是否已正確設定');
   };
-}
-function updateGeminiSettings(model, isPaid, pwd) {
-  if (!verifyAdmin(pwd)) throw new Error('密碼錯誤！');
-  var c = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config');
-  if (model !== undefined) _updateConfigValue(c, 'GeminiModel', String(model || 'gemma-4-31b-it').trim());
-  if (isPaid !== undefined)_updateConfigValue(c, 'IsPaidAccount', isPaid ? 'true' : 'false');
-  return '✅ Gemini 設定已更新！';
-}
-function getHelpUrl() {
-  return String(getConfig().HelpUrl || '').trim();
-}
-function updateHelpUrl(url, pwd) {
-  if (pwd && !verifyAdmin(pwd)) throw new Error('密碼錯誤！');
-  var cfg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Config');
-  var safeUrl = String(url || '').trim();
-  _updateConfigValue(cfg, 'HelpUrl', safeUrl);
-  return '✅ 操作說明網址已' + (safeUrl ? '更新' : '清空');
+
+  script.src = ADMIN_API_URL + '?action=getList&callback=' + cbName;
+  document.body.appendChild(script);
 }
 
-// ==========================================
-// 🧠 Gemini AI 呼叫（多模型自動降級）
-// ==========================================
-function _callGemini(prompt, maxTokens, jsonMode) {
-  if (!prompt) throw new Error('傳入的 AI 提示詞為空！');
+function showTemplateError(msg) {
+  document.getElementById('template-loading').classList.add('hidden');
+  document.getElementById('template-error').classList.remove('hidden');
+  document.getElementById('template-error-msg').textContent = msg;
+}
 
-  var cfg    = getConfig();
-  var apiKey = String(cfg.GeminiAPIKey || '').trim();
-  var preferred = String(cfg.GeminiModel || 'gemma-4-31b-it').trim();
+function renderTemplateCards() {
+  document.getElementById('template-loading').classList.add('hidden');
+  document.getElementById('template-error').classList.add('hidden');
 
-  if (!apiKey || apiKey.indexOf('請在此') >= 0) {
-    throw new Error('請先在 Config 試算表設定 Gemini API 金鑰！');
+  const list = document.getElementById('template-list');
+  list.classList.remove('hidden');
+
+  if (templateList.length === 0) {
+    list.innerHTML = '<p class="col-span-2 text-slate-400 text-center py-8">目前沒有啟用中的範例，請聯絡老師。</p>';
+    return;
   }
 
-  var FALLBACK_MODELS = ['gemma-4-31b-it', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-  var modelsToTry = [preferred].concat(FALLBACK_MODELS.filter(function(m) { return m !== preferred; }));
+  list.innerHTML = templateList.map((tpl, idx) => `
+    <div id="card-${idx}" onclick="selectTemplate(${idx})"
+         class="cursor-pointer p-5 rounded-xl border-2 border-slate-200 hover:border-indigo-400 transition select-none">
+      <div class="flex justify-between items-start mb-2">
+        <span class="font-bold text-slate-800">${escapeHtml(tpl.name)}</span>
+        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">${escapeHtml(tpl.version)}</span>
+      </div>
+      <p class="text-sm text-slate-500">${escapeHtml(tpl.description)}</p>
+      ${tpl.workerSupport ? '<p class="text-xs text-blue-500 mt-2">☁️ 支援 Cloudflare Worker</p>' : ''}
+    </div>
+  `).join('');
+}
 
-  var genConfig = { temperature: 0.65, maxOutputTokens: maxTokens || 2048 };
-  if (jsonMode) genConfig.responseMimeType = 'application/json';
+function selectTemplate(idx) {
+  selectedTemplate = templateList[idx];
+  // 更新卡片選取狀態
+  templateList.forEach((_, i) => {
+    const card = document.getElementById('card-' + i);
+    if (i === idx) card.classList.add('card-selected');
+    else card.classList.remove('card-selected');
+  });
+  // 啟用下一步按鈕
+  document.getElementById('btn-step2-next').classList.remove('opacity-50', 'cursor-not-allowed');
+  document.getElementById('btn-step2-next').disabled = false;
+  // 顯示 Worker 選項
+  const workerOpt = document.getElementById('worker-option');
+  if (selectedTemplate.workerSupport) workerOpt.classList.remove('hidden');
+  else workerOpt.classList.add('hidden');
+}
 
-  var body = JSON.stringify({
-    contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: genConfig
+function onWorkerToggle() {
+  // 若已載入內容，立即更新 worker panel 顯示
+  if (templateContent.worker) renderWorkerPanel();
+}
+
+function confirmTemplateSelection() {
+  if (!selectedTemplate) return;
+  // 從 GAS 取得範本內容
+  const cbName = '_cbtpl_' + Date.now();
+  const script = document.createElement('script');
+  const timeout = setTimeout(() => {
+    alert('載入範例內容逾時，請重試。');
+    document.body.removeChild(script);
+  }, 15000);
+
+  window[cbName] = function(resp) {
+    clearTimeout(timeout);
+    try { document.body.removeChild(script); } catch(e) {}
+    delete window[cbName];
+
+    if (resp.status !== 'success') {
+      alert('載入範例失敗：' + (resp.message || '未知錯誤'));
+      return;
+    }
+    templateContent = resp.data || {};
+    goToStep(3);
+  };
+
+  script.src = ADMIN_API_URL + '?action=getTemplate&id=' + encodeURIComponent(selectedTemplate.id) + '&callback=' + cbName;
+  document.body.appendChild(script);
+}
+
+// ============================================================
+// 步驟 4：動態產生填空欄位並即時替換佔位符
+// ============================================================
+function renderInputFields() {
+  if (!selectedTemplate) return;
+  const container = document.getElementById('input-fields');
+  const useWorker = document.getElementById('useCfWorker') && document.getElementById('useCfWorker').checked;
+  const fields = selectedTemplate.fields || [];
+
+  let html = '';
+  // GAS 網址（固定有）
+  if (useWorker) {
+    html += makeInput('_gas', '⚙️ GAS WebApp 網址（填入 Worker 設定）', 'https://script.google.com/.../exec');
+    html += makeInput('_worker_url', '☁️ Worker 網址（填入 index.html）', 'https://my-worker.xxxx.workers.dev');
+  } else {
+    html += makeInput('_gas', '⚙️ GAS WebApp 網址', 'https://script.google.com/.../exec');
+  }
+  // 其餘動態欄位
+  fields.forEach(f => {
+    html += makeInput(f.id, f.label, f.placeholder || '');
   });
 
-  var lastError = '尚未嘗試任何模型';
+  container.innerHTML = html;
+  updateCodePreview();
 
-  for (var mi = 0; mi < modelsToTry.length; mi++) {
-    var model = modelsToTry[mi];
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + apiKey;
-
-    for (var retry = 0; retry < 2; retry++) {
-      var resp, result;
-      try {
-        resp = UrlFetchApp.fetch(url, {
-          method: 'post',
-          contentType: 'application/json',
-          payload: body,
-          muteHttpExceptions: true,
-          deadline: 55
-        });
-      } catch(networkErr) {
-        lastError = '網路錯誤：' + String(networkErr.message || networkErr).substring(0, 60);
-        if (retry < 1) Utilities.sleep(3000);
-        continue;
-      }
-
-      var rawText = '';
-      try { rawText = resp.getContentText(); } catch(e) {}
-
-      if (!rawText || rawText.trim().charAt(0) === '<') {
-        lastError = model + '：回傳非 JSON（可能是 HTML 錯誤頁）';
-        break;
-      }
-
-      try { result = JSON.parse(rawText); } catch(e) {
-        lastError = model + '：JSON 解析失敗';
-        break;
-      }
-
-      if (!result.error) {
-        // 成功！從 parts 中取出文字（從後往前找，跳過 thinking token）
-        try {
-          var parts = result.candidates[0].content.parts || [];
-          var text = '';
-          for (var pi = parts.length - 1; pi >= 0; pi--) {
-            if (parts[pi].text && parts[pi].text.trim()) {
-              text = parts[pi].text;
-              break;
-            }
-          }
-          if (!text) text = (parts[0] || {}).text || '';
-          return text;
-        } catch(e) {
-          lastError = model + '：candidates 解析失敗 - ' + e.message;
-          break;
-        }
-      }
-
-      var code = Number(result.error.code || 0);
-      var msg  = String(result.error.message || '');
-      lastError = model + ' [' + code + '] ' + msg.substring(0, 100);
-
-      if (code === 429 || msg.indexOf('quota') >= 0 || msg.indexOf('RESOURCE_EXHAUSTED') >= 0) {
-        Logger.log('⏳ ' + model + ' 配額限制，等待後重試…');
-        Utilities.sleep(retry === 0 ? 20000 : 50000);
-        continue;
-      }
-      if (code === 404 || msg.indexOf('not found') >= 0 || msg.indexOf('not supported') >= 0) {
-        Logger.log('⚠️ ' + model + ' 不存在，嘗試下一個模型');
-        break; // 跳到下一個模型
-      }
-      if (code === 403 || msg.indexOf('API key') >= 0) {
-        throw new Error('API 金鑰無效或無權限。請至 Google AI Studio 確認金鑰設定。');
-      }
-
-      throw new Error('Gemini ' + code + '：' + msg.substring(0, 150));
-    }
-  }
-
-  throw new Error('所有模型均無法使用。最後錯誤：' + lastError);
+  // Worker panel 顯示
+  renderWorkerPanel();
 }
 
-// ==========================================
-// 🔧 JSON 解析輔助
-// ==========================================
-function _tryJSON(str, fallback) {
-  try { return JSON.parse(str); } catch(e) { return fallback; }
+function makeInput(id, label, placeholder) {
+  return `<div>
+    <label class="block text-sm font-bold text-slate-700 mb-1.5">${escapeHtml(label)}</label>
+    <input type="text" id="field-${id}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 border-slate-300 bg-white shadow-sm"
+      placeholder="${escapeHtml(placeholder)}" oninput="updateCodePreview()">
+  </div>`;
 }
 
-function _parseAI(text) {
-  var s = String(text || '').trim();
-  // 去除 markdown 包裝
-  s = s.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/, '').trim();
-  // 找到第一個 [ 和最後一個 ]
-  var start = s.indexOf('[');
-  var end   = s.lastIndexOf(']');
-  if (start >= 0 && end > start) {
-    s = s.substring(start, end + 1);
-  }
-  try {
-    return JSON.parse(s);
-  } catch(e) {
-    Logger.log('_parseAI 失敗，嘗試修復：' + e.message);
-    // 嘗試修復常見問題（尾部逗號）
-    s = s.replace(/,\s*([}\]])/g, '$1');
-    try { return JSON.parse(s); } catch(e2) { return []; }
-  }
+function getFieldVal(id) {
+  const el = document.getElementById('field-' + id);
+  return el ? el.value.trim() : '';
 }
 
-function _isValid(node) {
-  var s = String(node || '').trim();
-  if (!s) return false;
-  var invalid = ['-', '未診斷', '未精熟', '精熟', '不通過', '未作答', '0'];
-  if (invalid.indexOf(s) >= 0) return false;
-  if (/^\d+(\.\d+)?$/.test(s)) return false;
-  if (s.length < 3) return false;
-  return true;
+function renderWorkerPanel() {
+  const useWorker = document.getElementById('useCfWorker') && document.getElementById('useCfWorker').checked;
+  const panel = document.getElementById('worker-panel');
+  if (useWorker && templateContent.worker) panel.classList.remove('hidden');
+  else panel.classList.add('hidden');
 }
 
-// ==========================================
-// 🏫 任務與學生資料
-// ==========================================
-function uploadTaskData(taskName, grade, subject, studentData, uniqueNodes) {
-  if (!taskName || !grade || !subject) throw new Error('任務名稱、年級、科目為必填');
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var stdData = (studentData || []).filter(function(s) { return s && String(s.number || '').trim(); });
-  var uNodes  = (uniqueNodes  || []).filter(_isValid);
+function updateCodePreview() {
+  if (!templateContent.html) return;
+  const useWorker = document.getElementById('useCfWorker') && document.getElementById('useCfWorker').checked;
+  const gasUrl    = getFieldVal('_gas');
+  const workerUrl = getFieldVal('_worker_url');
+  const apiTarget = (useWorker && workerUrl) ? workerUrl : gasUrl;
 
-  // 更新 Tasks 分頁
-  var tasksSheet = ss.getSheetByName('Tasks');
-  if (!tasksSheet) throw new Error('Tasks 分頁不存在，請先初始化資料庫');
-  var taskRows = tasksSheet.getDataRange().getValues();
-  var taskRowIdx = -1;
-  for (var i = 1; i < taskRows.length; i++) {
-    if (String(taskRows[i][0]) === String(taskName)) { taskRowIdx = i + 1; break; }
-  }
-  var taskRow = [taskName, grade, subject, new Date().toLocaleString('zh-TW'), stdData.length, JSON.stringify(uNodes)];
-  if (taskRowIdx > 0) tasksSheet.getRange(taskRowIdx, 1, 1, 6).setValues([taskRow]);
-  else               tasksSheet.appendRow(taskRow);
+  // 收集所有動態欄位值
+  const fields = selectedTemplate ? (selectedTemplate.fields || []) : [];
+  const vals = {};
+  fields.forEach(f => { vals[f.id] = getFieldVal(f.id); });
 
-  // 更新 Students 分頁（先刪除同任務舊資料）
-  var studSheet = ss.getSheetByName('Students');
-  if (studSheet && studSheet.getLastRow() > 1) {
-    var sRows = studSheet.getDataRange().getValues();
-    for (var j = sRows.length - 1; j >= 1; j--) {
-      if (String(sRows[j][0]) === String(taskName)) studSheet.deleteRow(j + 1);
-    }
-  }
-  if (studSheet && stdData.length > 0) {
-    var studRows = stdData.map(function(s) {
-      return [
-        taskName,
-        String(s.number || '').trim(),
-        String(s.name || '').trim(),
-        JSON.stringify((s.weakNodes || []).filter(_isValid))
-      ];
+  // 替換佔位符（{{API_URL_TARGET}} 等）
+  function replacePlaceholders(src) {
+    let s = src;
+    s = s.replace(/\{\{API_URL_TARGET\}\}/g, apiTarget || '請填入 API 網址');
+    s = s.replace(/\{\{GAS_URL\}\}/g, gasUrl || '請填入 GAS 網址');
+    // 動態欄位
+    Object.keys(vals).forEach(key => {
+      const re = new RegExp('\\{\\{' + key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').toUpperCase() + '\\}\\}', 'g');
+      s = s.replace(re, vals[key] || ('請填入 ' + key));
     });
-    studSheet.getRange(studSheet.getLastRow() + 1, 1, studRows.length, 4).setValues(studRows);
+    // 常見別名
+    s = s.replace(/\{\{FOLDER_ID\}\}/g, vals['folder'] || getFieldVal('folder') || '請填入資料夾 ID');
+    s = s.replace(/\{\{ADMIN_URL\}\}/g, vals['admin']  || getFieldVal('admin')  || '請填入網址');
+    return s;
   }
 
-  // History 紀錄
-  var hist = ss.getSheetByName('History');
-  if (hist) hist.appendRow([new Date().toLocaleString('zh-TW'), taskName, grade, subject, stdData.length, JSON.stringify(uNodes)]);
+  document.getElementById('code-html').value  = replacePlaceholders(templateContent.html);
+  document.getElementById('code-gas').value   = replacePlaceholders(templateContent.gas || '');
 
-  // 建立任務專屬分頁
-  _createTaskSheet(ss, taskName, grade, subject, stdData, uNodes);
-
-  return { taskName: taskName, studentCount: stdData.length, nodes: uNodes };
-}
-
-function _createTaskSheet(ss, taskName, grade, subject, studentData, uniqueNodes) {
-  try {
-    var name = taskName.substring(0, 40);
-    var existing = ss.getSheetByName(name);
-    if (existing) ss.deleteSheet(existing);
-    var sheet = ss.insertSheet(name);
-    var rows = [];
-    rows.push(['任務資訊', '年級：' + grade, '科目：' + subject, '建立時間：' + new Date().toLocaleString('zh-TW')]);
-    rows.push(['', '', '', '']);
-    rows.push(['座號', '姓名', '弱點節點', 'weakNodes(JSON)']);
-    (studentData || []).forEach(function(s) {
-      rows.push([String(s.number || '').trim(), String(s.name || '').trim(), (s.weakNodes || []).join('、'), JSON.stringify(s.weakNodes || [])]);
-    });
-    sheet.getRange(1, 1, rows.length, 4).setValues(rows);
-    sheet.getRange(rows.length + 2, 1, 1, 2).setValues([['班級弱點節點匯總', (uniqueNodes || []).join('、')]]);
-    sheet.getRange(1, 1, 1, 4).setBackground('#1e88e5').setFontColor('#fff').setFontWeight('bold');
-    sheet.getRange(3, 1, 1, 4).setBackground('#e3f2fd').setFontWeight('bold');
-  } catch(e) {
-    Logger.log('_createTaskSheet 失敗：' + e.message);
+  // Worker
+  renderWorkerPanel();
+  if (templateContent.worker) {
+    let workerSrc = templateContent.worker;
+    workerSrc = workerSrc.replace(/\{\{GAS_URL\}\}/g, gasUrl || '請填入 GAS 網址');
+    workerSrc = replacePlaceholders(workerSrc);
+    document.getElementById('code-worker').value = workerSrc;
   }
 }
 
-function getTasks() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tasks');
-  if (!sheet || sheet.getLastRow() < 2) return [];
-  return sheet.getDataRange().getValues().slice(1).filter(function(r) { return r[0]; }).map(function(r) {
-    return {
-      taskName: String(r[0]),
-      grade: String(r[1]),
-      subject: String(r[2]),
-      createdAt: String(r[3]),
-      studentCount: Number(r[4]),
-      weakNodes: _tryJSON(r[5], [])
-    };
-  });
+// ============================================================
+// 下載檔案
+// ============================================================
+function downloadCode(textareaId, filename) {
+  const content = document.getElementById(textareaId).value;
+  if (!content.trim()) { alert('程式碼尚未產生，請先完成填空！'); return; }
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
-function getStudents(taskName) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Students');
-  if (!sheet || sheet.getLastRow() < 2) return [];
-  return sheet.getDataRange().getValues().slice(1)
-    .filter(function(r) { return String(r[0]) === String(taskName) && String(r[1] || '').trim(); })
-    .map(function(r) {
-      var number = String(r[1]).trim();
-      var name   = String(r[2] || '').trim();
-      if (!name || name === 'null' || name === 'undefined') {
-        var m = number.match(/號\s*([\u4e00-\u9fa5]{2,4})(?:\s+\d+)?$/);
-        if (m) { name = m[1]; number = number.replace(/\s+[\u4e00-\u9fa5]{2,4}(?:\s+\d+)?$/, '').trim(); }
-      }
-      return {
-        taskName: String(r[0]),
-        number: number,
-        name: name.replace(/\s*\d+\s*$/, '').trim(),
-        weakNodes: _tryJSON(r[3], []).filter(_isValid)
-      };
-    });
+// ============================================================
+// 工具函數
+// ============================================================
+function escapeHtml(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// ==========================================
-// 📖 PDF 掃描與擷取
-// ==========================================
-function scanFolder(folderId) {
-  if (!folderId) throw new Error('請提供資料夾 ID');
-  var folder = DriveApp.getFolderById(folderId);
-  var files  = folder.getFilesByType(MimeType.PDF);
-  var result = [];
-  while (files.hasNext()) {
-    var f = files.next();
-    result.push({ id: f.getId(), name: f.getName(), size: f.getSize() });
-  }
-  return result;
-}
-
-function extractPdfText(fileId) {
-  var cache = CacheService.getScriptCache();
-  var key   = 'PDF_' + fileId;
-  var hit   = cache.get(key);
-  if (hit) return hit;
-  try {
-    var blob  = DriveApp.getFileById(fileId).getBlob();
-    var docId = Drive.Files.insert({ title: 'tmp_ocr_' + fileId, mimeType: MimeType.GOOGLE_DOCS }, blob).id;
-    var text  = DocumentApp.openById(docId).getBody().getText().substring(0, 8000);
-    Drive.Files.remove(docId);
-    try { cache.put(key, text, 3600); } catch(e) {}
-    return text;
-  } catch(e) {
-    Logger.log('extractPdfText 失敗：' + e.message);
-    return '';
-  }
-}
-
-// ==========================================
-// 🎯 出題核心
-// ==========================================
-function _buildPrompt(subject, grade, nodes, qcount, pdfText, mode) {
-  var cfg = getConfig();
-  var nodeList = (nodes || []).map(function(n, i) { return (i + 1) + '. 「' + n + '」'; }).join('\n');
-  var pdfSection = '';
-  if (pdfText) {
-    pdfSection = (mode === 'mixed')
-      ? '\n\n【參考教材（可參考但不限於此）】\n---\n' + pdfText + '\n---'
-      : '\n\n【教材（必須依據此教材出題）】\n---\n' + pdfText + '\n---';
-  }
-  var tpl = (subject === '國語') ? String(cfg.ChinesePrompt || '') : String(cfg.MathPrompt || '');
-  return tpl
-    .replace(/\{\{GRADE\}\}/g, grade)
-    .replace(/\{\{NODES\}\}/g, nodeList)
-    .replace(/\{\{QCOUNT\}\}/g, String(qcount || 1))
-    .replace(/\{\{PDF_CONTEXT\}\}/g, pdfSection);
-}
-
-function _buildGeneralPrompt(subject, grade, qcount) {
-  if (subject === '國語') {
-    return '請為「' + grade + '」國小學生出 ' + qcount + ' 題基礎國語練習題（字音、字義、閱讀理解各類型均可）。\n' +
-           '只輸出 JSON 陣列（不要有其他文字）：\n' +
-           '[{"node":"基礎練習","level":"C","text":"題目內容","type":"single","options":["A","B","C","D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]';
-  }
-  return '請為「' + grade + '」國小學生出 ' + qcount + ' 題基礎數學練習題（四則運算、分數、小數各類型均可）。\n' +
-         '只輸出 JSON 陣列（不要有其他文字）：\n' +
-         '[{"node":"基礎練習","level":"D","text":"題目內容","type":"single","options":["A","B","C","D"],"answer":"A","difficulty":"easy","hint":"解題提示"}]';
-}
-
-function _doGenerateBatch(nodesArray, grade, subject, batchIndex, pdfText, mode) {
-  var BATCH_SIZE = 5;
-  var QCOUNT     = 3;
-
-  var validNodes = (nodesArray || []).map(function(n) { return String(n || '').trim(); }).filter(_isValid);
-  var nodeBatches = [];
-  for (var i = 0; i < validNodes.length; i += BATCH_SIZE) {
-    nodeBatches.push({ nodes: validNodes.slice(i, i + BATCH_SIZE), isGeneral: false });
-  }
-  if (validNodes.length === 0) {
-    nodeBatches.push({ nodes: ['通用基礎練習'], isGeneral: true });
-  }
-
-  var total = nodeBatches.length;
-  if (batchIndex >= total) {
-    return { done: true, current: total, total: total, message: '✅ 全部完成' };
-  }
-
-  var batch  = nodeBatches[batchIndex];
-  var isLast = (batchIndex + 1 >= total);
-
-  // Bank-First：檢查題庫是否已有足夠題目
-  if (!batch.isGeneral) {
-    var bank = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-    if (bank && bank.getLastRow() >= 2) {
-      var bankRows = bank.getDataRange().getValues().slice(1).filter(function(r) { return r[0] && r[2]; });
-      var nodesToGenerate = batch.nodes.filter(function(node) {
-        var count = bankRows.filter(function(r) {
-          var nd = String(r[1] || '');
-          return (nd.indexOf(node) >= 0 || node.indexOf(nd) >= 0) &&
-                 (!grade   || String(r[7] || '') === grade) &&
-                 (!subject || String(r[8] || '') === subject);
-        }).length;
-        return count < QCOUNT;
-      });
-      if (nodesToGenerate.length === 0) {
-        return { done: isLast, current: batchIndex + 1, total: total, addedThisBatch: 0, message: '✅ 第' + (batchIndex + 1) + '批 Bank-First 命中（跳過出題）' };
-      }
-      batch = { nodes: nodesToGenerate, isGeneral: false };
-    }
-  }
-
-  // 組合 Prompt
-  var prompt   = batch.isGeneral
-    ? _buildGeneralPrompt(subject, grade, 10)
-    : _buildPrompt(subject, grade, batch.nodes, QCOUNT, pdfText, mode || 'ai');
-  var maxTok   = batch.isGeneral ? 3072 : Math.min(8192, batch.nodes.length * QCOUNT * 500 + 512);
-
-  // 呼叫 Gemini
-  var rawText   = _callGemini(prompt, maxTok, true);
-  var questions = [];
-  try {
-    var parsed = _parseAI(rawText);
-    questions  = parsed.filter(function(q) { return q && q.text && Array.isArray(q.options) && q.options.length >= 2; });
-  } catch(e) {
-    Logger.log('題目解析失敗：' + e.message);
-  }
-
-  // 寫入 Bank
-  var bankSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bank');
-  if (!bankSheet) throw new Error('Bank 分頁不存在，請先初始化資料庫');
-  var ts = Date.now().toString().slice(-6);
-  var newRows = questions.map(function(q, idx) {
-    var lv  = q.level || 'D';
-    var nd  = batch.isGeneral ? ('通用練習(' + subject + grade + ')') : (q.node || batch.nodes[0]);
-    var ans = String(q.answer || '').trim().toUpperCase().charAt(0) || 'A';
-    return [
-      'AI-' + subject + '-' + ts + '-' + batchIndex + '-' + idx,
-      nd,
-      String(q.text || ''),
-      q.type || 'single',
-      JSON.stringify(q.options || []),
-      ans,
-      q.difficulty || 'easy',
-      grade,
-      subject,
-      '[Level ' + lv + '] ' + (q.hint || '')
-    ];
-  });
-
-  if (newRows.length > 0) {
-    var lastRow = bankSheet.getLastRow() || 1;
-    bankSheet.getRange(lastRow + 1, 1, newRows.length, 10).setValues(newRows);
-  }
-
-  return {
-    done: isLast,
-    current: batchIndex + 1,
-    total: total,
-    addedThisBatch: newRows.length,
-    message: '新增 ' + newRows.length + ' 題'
-  };
-}
-
-function generateBatch(nodesArray, grade, subject, batchIndex) {
-  return _doGenerateBatch(nodesArray, grade, subject || '數學', batchIndex, null, 'ai');
-}
-
-function generateBatchFromFolder(folderId, nodesArray, grade, subject, batchIndex, mode) {
-  var pdfText = '';
-  if (folderId) {
-    try {
-      var files = scanFolder(folderId);
-      var texts = [];
-      for (var i = 0; i < Math.min(files.length, 3); i++) {
-        var t = extractPdfText(files[i].id);
-        if (t) texts.push(t);
-        if (texts.join('').length > 6000) break;
-      }
-      pdfText = texts.join('\n\n').substring(0, 8000);
-    } catch(e) { Logger.log('PDF 擷取失敗：' + e.message); }
-  }
-  return _doGenerateBatch(nodesArray, grade, subject || '數學', batchIndex, pdfText, mode || 'mixed');
-}
-
-function regenerateBatchForTask(taskName, batchIndex, mode, folderId) {
+// 初始化
+renderNav(1);
+</script>
+</body>
+</html>
